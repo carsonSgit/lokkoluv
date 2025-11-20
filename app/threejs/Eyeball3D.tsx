@@ -5,7 +5,6 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
-// Helper function to create a grainy texture
 function createGrainTexture(width: number, height: number, intensity: number) {
   const size = width * height
   const data = new Uint8Array(4 * size)
@@ -72,13 +71,12 @@ function createPurpleDotTexture(width: number, height: number) {
   }
 
   const texture = new THREE.CanvasTexture(canvas)
-  // nicer sampling and color space
   texture.wrapS = THREE.RepeatWrapping
   texture.wrapT = THREE.RepeatWrapping
-  texture.repeat.set(2, 2)               // scales the dots across the iris
+  texture.repeat.set(2, 2)
   texture.minFilter = THREE.LinearFilter
   texture.magFilter = THREE.LinearFilter
-  texture.colorSpace = THREE.SRGBColorSpace // or .encoding = sRGBEncoding on older versions
+  texture.colorSpace = THREE.SRGBColorSpace
   texture.needsUpdate = true
   return texture
 }
@@ -93,19 +91,56 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
   const isUserInteractingRef = useRef(false)
   const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
+  // Idle animation state
+  const [isMobile, setIsMobile] = useState(false)
+  const isIdleRef = useRef(false)
+  const afkTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const randomTargetRef = useRef({ x: 0, y: 0 })
+  const nextTargetTimeRef = useRef(0)
+  
   const dotTexture = useMemo(() => createDotTexture(256, 256), [])
   const grainTexture = useMemo(() => createGrainTexture(256, 256, 50), [])
   const purpleDotTexture = useMemo(() => createPurpleDotTexture(256, 256), [])
   
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = /Android|webOS|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768
+      setIsMobile(mobile)
+      isIdleRef.current = mobile // Start idle on mobile
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       setMouseX(event.clientX)
       setMouseY(event.clientY)
+      
+      // Reset AFK timer on mouse movement (desktop only)
+      if (!isMobile) {
+        isIdleRef.current = false
+        
+        if (afkTimeoutRef.current) {
+          clearTimeout(afkTimeoutRef.current)
+        }
+        
+        // Set AFK after 3 seconds of no movement
+        afkTimeoutRef.current = setTimeout(() => {
+          isIdleRef.current = true
+        }, 3000)
+      }
     }
     
     window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      if (afkTimeoutRef.current) clearTimeout(afkTimeoutRef.current)
+    }
+  }, [isMobile])
 
   useEffect(() => {
     const controls = controlsRef.current
@@ -138,6 +173,7 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
   
   useFrame((state) => {
     const controls = controlsRef.current
+    const time = state.clock.getElapsedTime()
     
     // Smoothly reset camera to default position when not interacting
     if (controls && !isUserInteractingRef.current) {
@@ -153,11 +189,9 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
       
       // Only reset if we're not already at default position
       if (Math.abs(azimuthDiff) > 0.01 || Math.abs(polarDiff) > 0.01) {
-        // Use lerp for smooth interpolation
         const newAzimuth = THREE.MathUtils.lerp(currentAzimuth, defaultAzimuth, resetSpeed)
         const newPolar = THREE.MathUtils.lerp(currentPolar, defaultPolar, resetSpeed)
         
-        // Calculate new camera position based on spherical coordinates
         const radius = controls.getDistance()
         const x = radius * Math.sin(newPolar) * Math.sin(newAzimuth)
         const y = radius * Math.cos(newPolar)
@@ -170,42 +204,55 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
     }
     
     if (eyeGroupRef.current) {
-      const eyeScreenPos = eyeGroupRef.current.position.clone()
-      eyeScreenPos.project(state.camera)
+      // Idle animation
+      if (isIdleRef.current) {
+        if (time > nextTargetTimeRef.current) {
+          randomTargetRef.current = {
+            x: (Math.random() - 0.5) * 1.2,
+            y: (Math.random() - 0.5) * 1.2
+          }
+
+          nextTargetTimeRef.current = time + Math.random() * 2 + 1
+        }
+        
+
+        targetXRef.current = THREE.MathUtils.lerp(targetXRef.current, randomTargetRef.current.x, 0.05)
+        targetYRef.current = THREE.MathUtils.lerp(targetYRef.current, randomTargetRef.current.y, 0.05)
+      } else {
+        const eyeScreenPos = eyeGroupRef.current.position.clone()
+        eyeScreenPos.project(state.camera)
+        
+        const eyeX = (eyeScreenPos.x * 0.5 + 0.9) * window.innerWidth
+        const eyeY = (-eyeScreenPos.y * 0.5 + 0.88) * window.innerHeight
+        
+        const dx = mouseX - eyeX
+        const dy = mouseY - eyeY
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        
+        const maxDistance = 1000
+        const normalizedDistance = Math.min(distance / maxDistance, 1)
+        
+        const maxRotation = 0.6 // radians - soft limit for rotation
+        const stiffness = 0.4 // lower = more elastic, higher = stiffer
+        
+        const rawX = (dx / window.innerWidth) * 2 * normalizedDistance
+        const rawY = (dy / window.innerHeight) * 2 * normalizedDistance
+        
+        targetXRef.current = maxRotation * Math.tanh(rawX / stiffness)
+        targetYRef.current = maxRotation * Math.tanh(rawY / stiffness)
+      }
       
-      const eyeX = (eyeScreenPos.x * 0.5 + 0.9) * window.innerWidth
-      const eyeY = (-eyeScreenPos.y * 0.5 + 0.88) * window.innerHeight
-      
-      const dx = mouseX - eyeX
-      const dy = mouseY - eyeY
-      const distance = Math.sqrt(dx * dx + dy * dy)
-      
-      const maxDistance = 1000
-      const normalizedDistance = Math.min(distance / maxDistance, 1)
-      
-      const maxRotation = 0.6 // radians - soft limit for rotation
-      const stiffness = 0.4 // lower = more elastic, higher = stiffer
-      
-      const rawX = (dx / window.innerWidth) * 2 * normalizedDistance
-      const rawY = (dy / window.innerHeight) * 2 * normalizedDistance
-      
-      targetXRef.current = maxRotation * Math.tanh(rawX / stiffness)
-      targetYRef.current = maxRotation * Math.tanh(rawY / stiffness)
-      
-      // Apply easing to rotation (smooth following)
-      eyeGroupRef.current.rotation.x += (targetYRef.current - eyeGroupRef.current.rotation.x)
-      eyeGroupRef.current.rotation.y += (targetXRef.current - eyeGroupRef.current.rotation.y)
+      eyeGroupRef.current.rotation.x += (targetYRef.current - eyeGroupRef.current.rotation.x) * 0.1
+      eyeGroupRef.current.rotation.y += (targetXRef.current - eyeGroupRef.current.rotation.y) * 0.1
     }
   })
 
   return (
     <group ref={eyeGroupRef}>
-      {/* Ambient and directional lighting for depth */}
       <ambientLight intensity={2} />
       <directionalLight position={[5, 5, 5]} intensity={2.2} />
       <pointLight position={[-5, -5, 5]} intensity={0.4} />
 
-      {/* White eyeball (sclera) - main sphere with dotted texture */}
       <mesh>
         <sphereGeometry args={[2, 64, 64]} />
         <meshStandardMaterial 
@@ -217,7 +264,6 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
       </mesh>
       
       <group position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        {/* Outermost ring - BLACK with texture */}
         <mesh>
           <sphereGeometry args={[2, 64, 64, 0, Math.PI * 2, 0, 0.36]} />
           <meshStandardMaterial 
@@ -229,7 +275,6 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
           />
         </mesh>
 
-        {/* Center ring - PURPLE - smaller spherical cap with grainy texture */}
         <mesh>
           <sphereGeometry args={[2.01, 64, 64, 0, Math.PI * 2, 0, 0.3]} />
           <meshStandardMaterial 
@@ -243,7 +288,6 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
           />
         </mesh>
 
-        {/* Center circle - BLACK (pupil) - smallest spherical cap */}
         <mesh>
           <sphereGeometry args={[2.01, 64, 64, 0, Math.PI * 2, 0, 0.15]} />
           <meshStandardMaterial 
@@ -265,7 +309,6 @@ function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
         </mesh>
       </group>
 
-      {/* Glass/cornea overlay for realistic shine */}
       <mesh>
         <sphereGeometry args={[2.05, 64, 64]} />
         <meshPhysicalMaterial 
