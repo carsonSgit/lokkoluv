@@ -2,182 +2,198 @@ import Image from "next/image";
 import Eyeball3D from "./threejs/Eyeball3D";
 
 export default function Home() {
-  return (
-    <main className="w-full">
-      {/* LOKKOLUV Header */}
-      <header className="pt-16 text-center">
-        <h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
-          LOKKOLUV
-        </h1>
-      </header>
+	return (
+		<main className="w-full">
+			{/* LOKKOLUV Header */}
+			<header className="pt-16 text-center">
+				<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
+					LOKKOLUV
+				</h1>
+			</header>
 
-        <div className="container max-w-[90%] mx-auto px-4">
-            <section className="mt-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-20">  
-                    <div className="space-y-3">
-                        <Image
-                            src="/images/work1.webp"
-                            alt="Work 1"
-                            width={1200}
-                            height={1200}
-                            priority
-                            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
-                            className="w-full h-auto object-cover"
-                        />
-                        <h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
-                            Title
-                        </h3>
-                    </div>
+			<div className="container max-w-[90%] mx-auto px-4">
+				<section className="mt-12">
+					<div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-20">
+						<div className="space-y-3">
+							<Image
+								src="/images/work1.webp"
+								alt="Work 1"
+								width={1200}
+								height={1200}
+								priority
+								sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+								className="w-full h-auto object-cover"
+							/>
+							<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
+								Title
+							</h3>
+						</div>
 
-                    <div className="space-y-3">
-                        <Image
-                            src="/images/work2.webp"
-                            alt="Work 2"
-                            width={1200}
-                            height={1200}
-                            priority
-                            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
-                            className="w-full h-auto object-cover"
-                        />
-                        <h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
-                            Title
-                        </h3>
-                    </div>
+						<div className="space-y-3">
+							<Image
+								src="/images/work2.webp"
+								alt="Work 2"
+								width={1200}
+								height={1200}
+								priority
+								sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+								className="w-full h-auto object-cover"
+							/>
+							<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
+								Title
+							</h3>
+						</div>
 
-                    <div className="space-y-3">
-                        <Image
-                            src="/images/work3.webp"
-                            alt="Work 3"
-                            width={1200}
-                            height={1200}
-                            priority
-                            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
-                            className="w-full h-auto object-cover"
-                        />
-                        <h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
-                            Title
-                        </h3>
-                    </div>
+						<div className="space-y-3">
+							<Image
+								src="/images/work3.webp"
+								alt="Work 3"
+								width={1200}
+								height={1200}
+								priority
+								sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+								className="w-full h-auto object-cover"
+							/>
+							<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
+								Title
+							</h3>
+						</div>
 
-                    <div className="space-y-3">
-                        <Image
-                            src="/images/work4.webp"
-                            alt="Work 4"
-                            width={1200}
-                            height={1200}
-                            priority
-                            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
-                            className="w-full h-auto object-cover"
-                        />
-                        <h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
-                            Title
-                        </h3>
-                    </div>
-                </div>
-            </section>
-        </div>
+						<div className="space-y-3">
+							<Image
+								src="/images/work4.webp"
+								alt="Work 4"
+								width={1200}
+								height={1200}
+								priority
+								sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+								className="w-full h-auto object-cover"
+							/>
+							<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
+								Title
+							</h3>
+						</div>
+					</div>
+				</section>
+			</div>
 
-        <div className="w-full">
-            <section className="mt-16 bg-[#1e1e1e] py-12 ">
-                <div className="relative h-auto flex flex-col justify-center space-y-8 md:space-y-12">
-                {[...Array(7)].map((_, i) => (
-                    <p
-                    key={i}
-                    className="font-inter text-white text-[clamp(1.5rem,4vw,3rem)] tracking-[clamp(10px,3vw,40px)] text-center"
-                    >
-                    WE ARE ALL SINNERS
-                    </p>
-                ))}
-                </div>
-            </section>
-        </div>
+			<div className="w-full">
+				<section className="mt-16 bg-[#1e1e1e] py-12 ">
+					<div className="relative h-auto flex flex-col justify-center space-y-8 md:space-y-12">
+						{[...Array(7)].map((_, i) => (
+							<p
+								key={`sinner-text-${i}`}
+								className="font-inter text-white text-[clamp(1.5rem,4vw,3rem)] tracking-[clamp(10px,3vw,40px)] text-center"
+							>
+								WE ARE ALL SINNERS
+							</p>
+						))}
+					</div>
+				</section>
+			</div>
 
-        <div className="container max-w-[90%] mx-auto px-4">
-            <section className="mt-16">
-                <h2 className="font-extrabold text-[clamp(2rem,8vw,7.5rem)] text-black mb-12 tracking-tight text-center">
-                7 SINS COMING SOON
-                </h2>
+			<div className="container max-w-[90%] mx-auto px-4">
+				<section className="mt-16">
+					<h2 className="font-extrabold text-[clamp(2rem,8vw,7.5rem)] text-black mb-12 tracking-tight text-center">
+						7 SINS COMING SOON
+					</h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Image
-                        src="/images/clothes1.png"
-                        alt="Clothes 1"
-                        width={900}
-                        height={1200}
-                        sizes="(max-width: 768px) 90vw, (max-width: 1200px) 33vw, 400px"
-                        className="w-full h-auto object-cover"
-                    />
-                    <Image
-                        src="/images/clothes2.png"
-                        alt="Clothes 2"
-                        width={900}
-                        height={1200}
-                        sizes="(max-width: 768px) 90vw, (max-width: 1200px) 33vw, 400px"
-                        className="w-full h-auto object-cover"
-                    />
-                    <Image
-                        src="/images/clothes3.png"
-                        alt="Clothes 3"
-                        width={900}
-                        height={1200}
-                        sizes="(max-width: 768px) 90vw, (max-width: 1200px) 33vw, 400px"
-                        className="w-full h-auto object-cover"
-                    />
-                </div>
-            </section>
-        </div>
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+						<Image
+							src="/images/clothes1.png"
+							alt="Clothes 1"
+							width={900}
+							height={1200}
+							sizes="(max-width: 768px) 90vw, (max-width: 1200px) 33vw, 400px"
+							className="w-full h-auto object-cover"
+						/>
+						<Image
+							src="/images/clothes2.png"
+							alt="Clothes 2"
+							width={900}
+							height={1200}
+							sizes="(max-width: 768px) 90vw, (max-width: 1200px) 33vw, 400px"
+							className="w-full h-auto object-cover"
+						/>
+						<Image
+							src="/images/clothes3.png"
+							alt="Clothes 3"
+							width={900}
+							height={1200}
+							sizes="(max-width: 768px) 90vw, (max-width: 1200px) 33vw, 400px"
+							className="w-full h-auto object-cover"
+						/>
+					</div>
+				</section>
+			</div>
 
+			<div className="container max-w-[90%] mx-auto px-4 pt-32">
+				<section className="pb-10">
+					<div className="flex flex-col md:flex-row justify-between items-center gap-12">
+						{/* Eye - shows first on mobile, on the right on desktop */}
+						<div className="self-center order-1 md:order-2">
+							<Eyeball3D />
+						</div>
 
-        <div className="container max-w-[90%] mx-auto px-4 pt-32">
-            <section className="pb-10">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-                    <div className="space-y-12">
-                        <h2 className="font-extrabold text-[clamp(2rem,7vw,6.25rem)] text-black tracking-tight text-center">
-                        FIND ME AT
-                        </h2>
+						{/* Social links - shows second on mobile, on the left on desktop */}
+						<div className="space-y-8 md:space-y-12 order-2 md:order-1">
+							<h2 className="font-extrabold text-[clamp(2rem,7vw,6.25rem)] text-black tracking-tight text-center md:text-left">
+								FIND ME AT
+							</h2>
 
-                        <div className="space-y-4">
-                            {/* Instagram */}
-                            <a 
-                                href="https://instagram.com" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-5 group hover:opacity-70 transition-opacity"
-                            >
-                                <div className="w-[50px] h-[48px] bg-[#d9d9d9] group-hover:bg-[#c9c9c9] transition-colors flex items-center justify-center">
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                                </svg>
-                                </div>
-                                <span className="font-amiko text-[clamp(1.5rem,3vw,2.25rem)] tracking-[2.16px] text-black">
-                                INSTAGRAM
-                                </span>
-                            </a>
+							<div className="flex flex-row md:flex-col gap-6 md:gap-4 justify-center md:justify-start">
+								<a
+									href="https://instagram.com"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-5 group hover:opacity-70 transition-opacity"
+								>
+									<div className="w-[50px] h-[48px] flex items-center justify-center">
+										<svg
+											role="img"
+											aria-label="Instagram Icon"
+											xmlns="http://www.w3.org/2000/svg"
+											width="32"
+											height="32"
+											fill="#000000"
+											viewBox="0 0 256 256"
+										>
+											<path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"></path>
+										</svg>
+									</div>
+									<span className="hidden md:inline font-amiko text-[clamp(1.5rem,3vw,2.25rem)] tracking-[2.16px] text-black">
+										INSTAGRAM
+									</span>
+								</a>
 
-                            {/* TikTok */}
-                            <a 
-                                href="https://tiktok.com" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-5 group hover:opacity-70 transition-opacity"
-                            >
-                                <div className="w-[50px] h-[47px] bg-[#d9d9d9] group-hover:bg-[#c9c9c9] transition-colors flex items-center justify-center">
-                                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                                </svg>
-                                </div>
-                                <span className="font-amiko text-[clamp(1.5rem,3vw,2.25rem)] tracking-[2.16px] text-black">
-                                TIKTOK
-                                </span>
-                            </a>
-                            </div>
-                        </div>
-                    <div className="self-center">
-                        <Eyeball3D />
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-  );
+								<a
+									href="https://tiktok.com"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-5 group hover:opacity-70 transition-opacity"
+								>
+									<div className="w-[50px] h-[48px] flex items-center justify-center">
+										<svg
+											role="img"
+											aria-label="TikTok Icon"
+											xmlns="http://www.w3.org/2000/svg"
+											width="32"
+											height="32"
+											fill="#000000"
+											viewBox="0 0 256 256"
+										>
+											<path d="M224,72a48.05,48.05,0,0,1-48-48,8,8,0,0,0-8-8H128a8,8,0,0,0-8,8V156a20,20,0,1,1-28.57-18.08A8,8,0,0,0,96,130.69V88a8,8,0,0,0-9.4-7.88C50.91,86.48,24,119.1,24,156a76,76,0,0,0,152,0V116.29A103.25,103.25,0,0,0,224,128a8,8,0,0,0,8-8V80A8,8,0,0,0,224,72Zm-8,39.64a87.19,87.19,0,0,1-43.33-16.15A8,8,0,0,0,160,102v54a60,60,0,0,1-120,0c0-25.9,16.64-49.13,40-57.6v27.67A36,36,0,1,0,136,156V32h24.5A64.14,64.14,0,0,0,216,87.5Z"></path>
+										</svg>
+									</div>
+									<span className="hidden md:inline font-amiko text-[clamp(1.5rem,3vw,2.25rem)] tracking-[2.16px] text-black">
+										TIKTOK
+									</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	);
 }

@@ -3,27 +3,24 @@ import { Tenor_Sans } from "next/font/google";
 import "./globals.css";
 
 const tenorSans = Tenor_Sans({
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
+	weight: "400",
+	subsets: ["latin"],
+	display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "LOKKOLUV",
-  description: "Portfolio by LOKKOLUV",
+	title: "LOKKOLUV",
+	description: "Portfolio by LOKKOLUV",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${tenorSans.className} antialiased`}>
-        {children}
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body className={`${tenorSans.className} antialiased`}>{children}</body>
+		</html>
+	);
 }
-
