@@ -84,12 +84,14 @@ function createPurpleDotTexture(width: number, height: number) {
 }
 
 
-function EyeballMesh() {
+function EyeballMesh({ controlsRef }: { controlsRef: React.RefObject<any> }) {
   const eyeGroupRef = useRef<THREE.Group>(null)
   const [mouseX, setMouseX] = useState(0)
   const [mouseY, setMouseY] = useState(0)
   const targetXRef = useRef(0)
   const targetYRef = useRef(0)
+  const isUserInteractingRef = useRef(false)
+  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
   const dotTexture = useMemo(() => createDotTexture(256, 256), [])
   const grainTexture = useMemo(() => createGrainTexture(256, 256, 50), [])
@@ -104,8 +106,69 @@ function EyeballMesh() {
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
+
+  useEffect(() => {
+    const controls = controlsRef.current
+    if (!controls) return
+
+    const handleStart = () => {
+      isUserInteractingRef.current = true
+      if (idleTimeoutRef.current) {
+        clearTimeout(idleTimeoutRef.current)
+        idleTimeoutRef.current = null
+      }
+    }
+
+    const handleEnd = () => {
+      // Set a timeout to mark as not interacting after user stops
+      idleTimeoutRef.current = setTimeout(() => {
+        isUserInteractingRef.current = false
+      }, 100)
+    }
+
+    controls.addEventListener('start', handleStart)
+    controls.addEventListener('end', handleEnd)
+
+    return () => {
+      controls.removeEventListener('start', handleStart)
+      controls.removeEventListener('end', handleEnd)
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current)
+    }
+  }, [controlsRef])
   
   useFrame((state) => {
+    const controls = controlsRef.current
+    
+    // Smoothly reset camera to default position when not interacting
+    if (controls && !isUserInteractingRef.current) {
+      const defaultAzimuth = 0
+      const defaultPolar = Math.PI / 2
+      const resetSpeed = 0.03
+      
+      const currentAzimuth = controls.getAzimuthalAngle()
+      const currentPolar = controls.getPolarAngle()
+      
+      const azimuthDiff = defaultAzimuth - currentAzimuth
+      const polarDiff = defaultPolar - currentPolar
+      
+      // Only reset if we're not already at default position
+      if (Math.abs(azimuthDiff) > 0.01 || Math.abs(polarDiff) > 0.01) {
+        // Use lerp for smooth interpolation
+        const newAzimuth = THREE.MathUtils.lerp(currentAzimuth, defaultAzimuth, resetSpeed)
+        const newPolar = THREE.MathUtils.lerp(currentPolar, defaultPolar, resetSpeed)
+        
+        // Calculate new camera position based on spherical coordinates
+        const radius = controls.getDistance()
+        const x = radius * Math.sin(newPolar) * Math.sin(newAzimuth)
+        const y = radius * Math.cos(newPolar)
+        const z = radius * Math.sin(newPolar) * Math.cos(newAzimuth)
+        
+        state.camera.position.set(x, y, z)
+        state.camera.lookAt(controls.target)
+        controls.update()
+      }
+    }
+    
     if (eyeGroupRef.current) {
       const eyeScreenPos = eyeGroupRef.current.position.clone()
       eyeScreenPos.project(state.camera)
@@ -219,17 +282,22 @@ function EyeballMesh() {
 }
 
 export default function Eyeball3D() {
+  const controlsRef = useRef<any>(null)
+  
   return (
     <div className="w-[338px] h-[338px]">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
       >
-        <EyeballMesh />
+        <EyeballMesh controlsRef={controlsRef} />
         <OrbitControls 
+          ref={controlsRef}
           enableZoom={false}
           enablePan={false}
-          enableRotate={false}
+          enableRotate={true}
+          enableDamping={true}
+          dampingFactor={0.05}
         />
       </Canvas>
     </div>
