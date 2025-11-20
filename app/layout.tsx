@@ -11,6 +11,9 @@ const tenorSans = Tenor_Sans({
 export const metadata: Metadata = {
 	title: "LOKKOLUV",
 	description: "Portfolio by LOKKOLUV",
+	icons: {
+		icon: "/images/eyecon.ico",
+	},
 };
 
 export default function RootLayout({
