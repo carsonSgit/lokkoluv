@@ -100,7 +100,7 @@ export default function Home() {
 
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 						<Image
-							src="/images/clothes1.png"
+							src="/images/clothes1.webp"
 							alt="Clothes 1"
 							width={900}
 							height={1200}
@@ -108,7 +108,7 @@ export default function Home() {
 							className="w-full h-auto object-cover"
 						/>
 						<Image
-							src="/images/clothes2.png"
+							src="/images/clothes2.webp"
 							alt="Clothes 2"
 							width={900}
 							height={1200}
@@ -116,7 +116,7 @@ export default function Home() {
 							className="w-full h-auto object-cover"
 						/>
 						<Image
-							src="/images/clothes3.png"
+							src="/images/clothes3.webp"
 							alt="Clothes 3"
 							width={900}
 							height={1200}
