@@ -13,7 +13,7 @@ export default function Home() {
 				</h1>
 			</header>
 
-			<div className="container max-w-[90%] mx-auto px-4">
+			<div className="container max-w-[90%] mx-auto px-4 pb-12">
 				<section className="mt-12">
 					<div className="grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-20">
 						<div className="space-y-3">
@@ -83,13 +83,13 @@ export default function Home() {
 				</section>
 			</div>
 
-			<div className="w-full">
-				<section className="mt-16 bg-[#1e1e1e] py-12 ">
+			<div className="w-full my-24">
+				<section className="mt-16 bg-[#1e1e1e] py-32 ">
 					<div className="relative h-auto flex flex-col justify-center space-y-8 md:space-y-12">
 						{[...Array(7)].map((_, i) => (
 							<p
 								key={`sinner-text-${i}`}
-								className="text-white text-[clamp(1.5rem,4vw,3rem)] tracking-[clamp(10px,3vw,40px)] text-center"
+								className="text-white text-[clamp(1.5rem,4vw,3rem)] tracking-[clamp(10px,3vw,40px)] text-center font-bold"
 							>
 								WE ARE ALL SINNERS
 							</p>
@@ -99,8 +99,8 @@ export default function Home() {
 			</div>
 
 			<div className="container max-w-[90%] mx-auto px-4">
-				<section className="mt-16">
-					<h2 className="font-extrabold text-[clamp(2rem,8vw,7.5rem)] text-black mb-12 tracking-tight text-center">
+				<section>
+					<h2 className="font-bold text-[clamp(2rem,8vw,7rem)] mb-6 tracking-tight text-center">
 						7 SINS COMING SOON
 					</h2>
 
