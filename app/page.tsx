@@ -152,7 +152,7 @@ export default function Home() {
 
 							<div className="flex flex-row md:flex-col gap-6 md:gap-4 justify-center md:justify-start">
 								<a
-									href="https://instagram.com"
+									href="https://www.instagram.com/lokkoluv/"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex items-center gap-5 group hover:opacity-70 transition-opacity"
@@ -176,7 +176,7 @@ export default function Home() {
 								</a>
 
 								<a
-									href="https://tiktok.com"
+									href="https://www.tiktok.com/@lokkoluv"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="flex items-center gap-5 group hover:opacity-70 transition-opacity"
