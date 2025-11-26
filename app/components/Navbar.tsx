@@ -1,25 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
+	const navRef = useRef<HTMLElement>(null);
+
+	// Close menu when clicking outside
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (navRef.current && !navRef.current.contains(event.target as Node)) {
+				setIsOpen(false);
+			}
+		};
+
+		if (isOpen) {
+			document.addEventListener("click", handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener("click", handleClickOutside);
+		};
+	}, [isOpen]);
 
 	return (
-		<nav className="absolute top-0 left-0 right-0 z-50">
+		<nav ref={navRef} className="absolute top-0 left-0 right-0 z-50">
 			<div className="max-w-[90%] mx-auto px-4 pt-6 md:pt-[1.75rem]">
 				<div className="flex justify-end items-start">
 					{/* Desktop Navigation */}
 					<div className="hidden md:flex items-center gap-16">
 						<a
 							href="#works"
-							className="text-black text-md tracking-[0.2em] hover:opacity-50 transition-opacity duration-300 font-bold" 
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4"
 						>
 							WORKS
 						</a>
 						<a
 							href="#about"
-							className="text-black text-md tracking-[0.2em] hover:opacity-50 transition-opacity duration-300 font-bold"
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4"
 						>
 							ABOUT
 						</a>
@@ -60,14 +78,14 @@ export default function Navbar() {
 						<a
 							href="#works"
 							onClick={() => setIsOpen(false)}
-							className="text-black text-md tracking-[0.2em] hover:opacity-50 transition-opacity duration-300 font-bold"
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4"
 						>
 							WORKS
 						</a>
 						<a
 							href="#about"
 							onClick={() => setIsOpen(false)}
-							className="text-black text-md tracking-[0.2em] hover:opacity-50 transition-opacity duration-300 font-bold"
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4"
 						>
 							ABOUT
 						</a>
@@ -77,4 +95,3 @@ export default function Navbar() {
 		</nav>
 	);
 }
-
