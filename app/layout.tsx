@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Tenor_Sans } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
+import Navbar from "./components/Navbar";
 
 const tenorSans = Tenor_Sans({
 	weight: "400",
@@ -25,6 +26,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${tenorSans.className} antialiased`}>
+				<Navbar />
 				{children}
 				<Analytics />
 			</body>
