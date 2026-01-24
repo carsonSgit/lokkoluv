@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Eyeball3D from "./threejs/Eyeball3D";
-import dynamic from "next/dynamic";
 
 
 
@@ -155,7 +154,7 @@ export default function Home() {
 									href="https://www.instagram.com/lokkoluv/"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="flex items-center gap-5 group"
+									className="flex items-center gap-5 group cursor-pointer min-h-[44px] transition-colors"
 								>
 									<div className="w-[50px] h-[48px] flex items-center justify-center">
 										<svg
@@ -179,7 +178,7 @@ export default function Home() {
 									href="https://www.tiktok.com/@lokkoluv"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="flex items-center gap-5 group"
+									className="flex items-center gap-5 group cursor-pointer min-h-[44px] transition-colors"
 								>
 									<div className="w-[50px] h-[48px] flex items-center justify-center">
 										<svg
