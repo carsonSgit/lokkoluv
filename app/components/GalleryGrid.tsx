@@ -1,8 +1,9 @@
 "use client";
 
+import { useCallback } from "react";
 import Image from "next/image";
 import type { BehobenPiece } from "@/lib/types";
-import { getImageUrl } from "@/lib/supabase";
+import { getLocalImageUrl } from "@/lib/behoben-data";
 
 interface GalleryGridProps {
 	pieces: BehobenPiece[];
@@ -10,24 +11,34 @@ interface GalleryGridProps {
 }
 
 export default function GalleryGrid({ pieces, onPieceClick }: GalleryGridProps) {
+	// Preload high-res overlay image on hover for instant modal display
+	const handleMouseEnter = useCallback((piece: BehobenPiece) => {
+		const img = new window.Image();
+		img.src = getLocalImageUrl(piece.image_filename);
+	}, []);
+
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
-			{pieces.map((piece) => (
+			{pieces.map((piece, index) => (
 				<button
 					key={piece.id}
 					type="button"
 					onClick={() => onPieceClick(piece)}
+					onMouseEnter={() => handleMouseEnter(piece)}
 					className="relative group cursor-pointer overflow-hidden focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2"
 					style={{ borderRadius: 0 }}
 				>
 					<Image
-						src={getImageUrl(piece.image_filename)}
+						src={getLocalImageUrl(piece.image_filename)}
 						alt={piece.title}
 						width={400}
 						height={400}
 						className="w-full h-auto object-cover transition-transform duration-300"
 						style={{ borderRadius: 0 }}
-						loading="lazy"
+						priority={index < 6}
+						loading={index < 6 ? "eager" : "lazy"}
+						placeholder="blur"
+						blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+"
 					/>
 
 					{/* Hover Overlay */}

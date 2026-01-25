@@ -1,13 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "wvgofeblqbwfqpxqblbd.supabase.co",
-				pathname: "/storage/v1/object/public/**",
-			},
-		],
+		// Local images only - no remote patterns needed
+		formats: ["image/webp", "image/avif"],
 	},
 };
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import type { BehobenPiece } from "@/lib/types";
-import { getImageUrl } from "@/lib/supabase";
+import { getLocalImageUrl } from "@/lib/behoben-data";
 import BehobenFooter from "./BehobenFooter";
 
 interface PieceOverlayProps {
@@ -114,13 +114,15 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 					{/* Image */}
 					<div className="md:w-1/2">
 						<Image
-							src={getImageUrl(piece.image_filename)}
+							src={getLocalImageUrl(piece.image_filename)}
 							alt={piece.title}
 							width={800}
 							height={800}
 							className="w-full h-auto object-cover"
 							style={{ borderRadius: 0 }}
 							priority
+							placeholder="blur"
+							blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+"
 						/>
 					</div>
 
