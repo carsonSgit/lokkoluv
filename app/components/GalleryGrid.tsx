@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import Image from "next/image";
 import type { BehobenPiece } from "@/lib/types";
 import { getLocalImageUrl } from "@/lib/behoben-data";
@@ -11,10 +11,16 @@ interface GalleryGridProps {
 }
 
 export default function GalleryGrid({ pieces, onPieceClick }: GalleryGridProps) {
-	// Preload high-res overlay image on hover for instant modal display
+	const preloadedImagesRef = useRef<Set<string>>(new Set());
+
 	const handleMouseEnter = useCallback((piece: BehobenPiece) => {
+		const imageUrl = getLocalImageUrl(piece.image_filename);
+
+		if (preloadedImagesRef.current.has(imageUrl)) return;
+
+		preloadedImagesRef.current.add(imageUrl);
 		const img = new window.Image();
-		img.src = getLocalImageUrl(piece.image_filename);
+		img.src = imageUrl;
 	}, []);
 
 	return (
@@ -33,10 +39,12 @@ export default function GalleryGrid({ pieces, onPieceClick }: GalleryGridProps) 
 						alt={piece.title}
 						width={400}
 						height={400}
+						sizes="(max-width: 768px) 90vw, 30vw"
 						className="w-full h-auto object-cover transition-transform duration-300"
 						style={{ borderRadius: 0 }}
 						priority={index < 6}
 						loading={index < 6 ? "eager" : "lazy"}
+						decoding={index < 6 ? "sync" : "async"}
 						placeholder="blur"
 						blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+"
 					/>

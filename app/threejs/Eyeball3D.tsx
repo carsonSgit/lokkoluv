@@ -2,7 +2,7 @@
 
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 function createGrainTexture(width: number, height: number, intensity: number) {
@@ -83,6 +83,8 @@ function createPurpleDotTexture(width: number, height: number) {
 	return texture;
 }
 
+const MOUSE_THROTTLE_MS = 16;
+
 type OrbitControlsType = {
 	addEventListener: (event: string, callback: () => void) => void;
 	removeEventListener: (event: string, callback: () => void) => void;
@@ -117,7 +119,9 @@ function EyeballMesh({
 	const grainTexture = useMemo(() => createGrainTexture(256, 256, 50), []);
 	const purpleDotTexture = useMemo(() => createPurpleDotTexture(256, 256), []);
 
-	// Detect mobile on mount
+	const lastMouseUpdateRef = useRef(0);
+	const mousePositionRef = useRef({ x: 0, y: 0 });
+
 	useEffect(() => {
 		const checkMobile = () => {
 			const mobile =
@@ -125,7 +129,7 @@ function EyeballMesh({
 					navigator.userAgent,
 				) || window.innerWidth < 768;
 			setIsMobile(mobile);
-			isIdleRef.current = mobile; // Start idle on mobile
+			isIdleRef.current = mobile;
 		};
 
 		checkMobile();
@@ -133,12 +137,18 @@ function EyeballMesh({
 		return () => window.removeEventListener("resize", checkMobile);
 	}, []);
 
-	useEffect(() => {
-		const handleMouseMove = (event: MouseEvent) => {
-			setMouseX(event.clientX);
-			setMouseY(event.clientY);
+	const handleMouseMove = useCallback(
+		(event: MouseEvent) => {
+			const now = performance.now();
 
-			// Reset AFK timer on mouse movement (desktop only)
+			if (now - lastMouseUpdateRef.current >= MOUSE_THROTTLE_MS) {
+				lastMouseUpdateRef.current = now;
+				mousePositionRef.current.x = event.clientX;
+				mousePositionRef.current.y = event.clientY;
+				setMouseX(event.clientX);
+				setMouseY(event.clientY);
+			}
+
 			if (!isMobile) {
 				isIdleRef.current = false;
 
@@ -151,14 +161,17 @@ function EyeballMesh({
 					isIdleRef.current = true;
 				}, 3000);
 			}
-		};
+		},
+		[isMobile],
+	);
 
-		window.addEventListener("mousemove", handleMouseMove);
+	useEffect(() => {
+		window.addEventListener("mousemove", handleMouseMove, { passive: true });
 		return () => {
 			window.removeEventListener("mousemove", handleMouseMove);
 			if (afkTimeoutRef.current) clearTimeout(afkTimeoutRef.current);
 		};
-	}, [isMobile]);
+	}, [handleMouseMove]);
 
 	useEffect(() => {
 		const controls = controlsRef.current;
@@ -173,7 +186,6 @@ function EyeballMesh({
 		};
 
 		const handleEnd = () => {
-			// Set a timeout to mark as not interacting after user stops
 			idleTimeoutRef.current = setTimeout(() => {
 				isUserInteractingRef.current = false;
 			}, 100);
@@ -189,29 +201,43 @@ function EyeballMesh({
 		};
 	}, [controlsRef]);
 
+	const windowDimensionsRef = useRef({ width: 0, height: 0 });
+
+	useEffect(() => {
+		const updateDimensions = () => {
+			windowDimensionsRef.current.width = window.innerWidth;
+			windowDimensionsRef.current.height = window.innerHeight;
+		};
+		updateDimensions();
+		window.addEventListener("resize", updateDimensions);
+		return () => window.removeEventListener("resize", updateDimensions);
+	}, []);
+
+	const tempVector = useMemo(() => new THREE.Vector3(), []);
+
+	const defaultPolar = Math.PI / 2;
+	const resetSpeed = 0.03;
+	const maxRotation = 0.6;
+	const stiffness = 0.4;
+	const lerpFactor = 0.1;
+	const idleLerpFactor = 0.05;
+
 	useFrame((state) => {
 		const controls = controlsRef.current;
+		const eyeGroup = eyeGroupRef.current;
 		const time = state.clock.getElapsedTime();
 
 		// Smoothly reset camera to default position when not interacting
 		if (controls && !isUserInteractingRef.current) {
-			const defaultAzimuth = 0;
-			const defaultPolar = Math.PI / 2;
-			const resetSpeed = 0.03;
-
 			const currentAzimuth = controls.getAzimuthalAngle();
 			const currentPolar = controls.getPolarAngle();
 
-			const azimuthDiff = defaultAzimuth - currentAzimuth;
-			const polarDiff = defaultPolar - currentPolar;
+			const azimuthDiff = Math.abs(currentAzimuth);
+			const polarDiff = Math.abs(defaultPolar - currentPolar);
 
 			// Only reset if we're not already at default position
-			if (Math.abs(azimuthDiff) > 0.01 || Math.abs(polarDiff) > 0.01) {
-				const newAzimuth = THREE.MathUtils.lerp(
-					currentAzimuth,
-					defaultAzimuth,
-					resetSpeed,
-				);
+			if (azimuthDiff > 0.01 || polarDiff > 0.01) {
+				const newAzimuth = THREE.MathUtils.lerp(currentAzimuth, 0, resetSpeed);
 				const newPolar = THREE.MathUtils.lerp(
 					currentPolar,
 					defaultPolar,
@@ -219,66 +245,68 @@ function EyeballMesh({
 				);
 
 				const radius = controls.getDistance();
-				const x = radius * Math.sin(newPolar) * Math.sin(newAzimuth);
-				const y = radius * Math.cos(newPolar);
-				const z = radius * Math.sin(newPolar) * Math.cos(newAzimuth);
-
-				state.camera.position.set(x, y, z);
+				const sinPolar = Math.sin(newPolar);
+				state.camera.position.set(
+					radius * sinPolar * Math.sin(newAzimuth),
+					radius * Math.cos(newPolar),
+					radius * sinPolar * Math.cos(newAzimuth),
+				);
 				state.camera.lookAt(controls.target);
 				controls.update();
 			}
 		}
 
-		if (eyeGroupRef.current) {
+		if (eyeGroup) {
 			// Idle animation
 			if (isIdleRef.current) {
 				if (time > nextTargetTimeRef.current) {
-					randomTargetRef.current = {
-						x: (Math.random() - 0.5) * 1.2,
-						y: (Math.random() - 0.5) * 1.2,
-					};
-
+					randomTargetRef.current.x = (Math.random() - 0.5) * 1.2;
+					randomTargetRef.current.y = (Math.random() - 0.5) * 1.2;
 					nextTargetTimeRef.current = time + Math.random() * 2 + 1;
 				}
 
 				targetXRef.current = THREE.MathUtils.lerp(
 					targetXRef.current,
 					randomTargetRef.current.x,
-					0.05,
+					idleLerpFactor,
 				);
 				targetYRef.current = THREE.MathUtils.lerp(
 					targetYRef.current,
 					randomTargetRef.current.y,
-					0.05,
+					idleLerpFactor,
 				);
 			} else {
-				const eyeScreenPos = eyeGroupRef.current.position.clone();
-				eyeScreenPos.project(state.camera);
+				// Reuse tempVector instead of clone() to avoid allocation
+				tempVector.copy(eyeGroup.position);
+				tempVector.project(state.camera);
 
-				const eyeX = (eyeScreenPos.x * 0.5 + 0.9) * window.innerWidth;
-				const eyeY = (-eyeScreenPos.y * 0.5 + 0.88) * window.innerHeight;
+				const { width, height } = windowDimensionsRef.current;
+				const eyeX = (tempVector.x * 0.5 + 0.9) * width;
+				const eyeY = (-tempVector.y * 0.5 + 0.88) * height;
 
 				const dx = mouseX - eyeX;
 				const dy = mouseY - eyeY;
 				const distance = Math.sqrt(dx * dx + dy * dy);
+				const normalizedDistance = Math.min(distance * 0.001, 1); // Avoid division
 
-				const maxDistance = 1000;
-				const normalizedDistance = Math.min(distance / maxDistance, 1);
-
-				const maxRotation = 0.6; // radians - soft limit for rotation
-				const stiffness = 0.4; // lower = more elastic, higher = stiffer
-
-				const rawX = (dx / window.innerWidth) * 2 * normalizedDistance;
-				const rawY = (dy / window.innerHeight) * 2 * normalizedDistance;
+				const rawX = (dx / width) * 2 * normalizedDistance;
+				const rawY = (dy / height) * 2 * normalizedDistance;
 
 				targetXRef.current = maxRotation * Math.tanh(rawX / stiffness);
 				targetYRef.current = maxRotation * Math.tanh(rawY / stiffness);
 			}
 
-			eyeGroupRef.current.rotation.x +=
-				(targetYRef.current - eyeGroupRef.current.rotation.x) * 0.1;
-			eyeGroupRef.current.rotation.y +=
-				(targetXRef.current - eyeGroupRef.current.rotation.y) * 0.1;
+			// Apply rotation with lerp
+			const currentRotX = eyeGroup.rotation.x;
+			const currentRotY = eyeGroup.rotation.y;
+			const deltaX = targetYRef.current - currentRotX;
+			const deltaY = targetXRef.current - currentRotY;
+
+			// Only update if there's meaningful change (skip micro-updates)
+			if (Math.abs(deltaX) > 0.0001 || Math.abs(deltaY) > 0.0001) {
+				eyeGroup.rotation.x = currentRotX + deltaX * lerpFactor;
+				eyeGroup.rotation.y = currentRotY + deltaY * lerpFactor;
+			}
 		}
 	});
 
@@ -288,8 +316,9 @@ function EyeballMesh({
 			<directionalLight position={[5, 5, 5]} intensity={2.2} />
 			<pointLight position={[-5, -5, 5]} intensity={0.4} />
 
+			{/* Main eyeball - reduced segments from 64 to 48 (still smooth at this size) */}
 			<mesh>
-				<sphereGeometry args={[2, 64, 64]} />
+				<sphereGeometry args={[2, 48, 48]} />
 				<meshStandardMaterial
 					color="#ffffff"
 					roughness={0.2}
@@ -299,8 +328,9 @@ function EyeballMesh({
 			</mesh>
 
 			<group position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+				{/* Iris outer - reduced segments */}
 				<mesh>
-					<sphereGeometry args={[2, 64, 64, 0, Math.PI * 2, 0, 0.36]} />
+					<sphereGeometry args={[2, 48, 48, 0, Math.PI * 2, 0, 0.36]} />
 					<meshStandardMaterial
 						color="#000000"
 						roughness={0.5}
@@ -310,8 +340,9 @@ function EyeballMesh({
 					/>
 				</mesh>
 
+				{/* Iris inner - reduced segments */}
 				<mesh>
-					<sphereGeometry args={[2.01, 64, 64, 0, Math.PI * 2, 0, 0.3]} />
+					<sphereGeometry args={[2.01, 48, 48, 0, Math.PI * 2, 0, 0.3]} />
 					<meshStandardMaterial
 						color="#ffffff"
 						map={purpleDotTexture}
@@ -323,8 +354,9 @@ function EyeballMesh({
 					/>
 				</mesh>
 
+				{/* Pupil - smaller detail, fewer segments needed */}
 				<mesh>
-					<sphereGeometry args={[2.01, 64, 64, 0, Math.PI * 2, 0, 0.15]} />
+					<sphereGeometry args={[2.01, 32, 32, 0, Math.PI * 2, 0, 0.15]} />
 					<meshStandardMaterial
 						color="#000000"
 						roughness={0.1}
@@ -333,8 +365,9 @@ function EyeballMesh({
 					/>
 				</mesh>
 
+				{/* Highlight - smallest detail, minimal segments */}
 				<mesh position={[0.1, 0, -0.1]}>
-					<sphereGeometry args={[2.02, 64, 64, 0, Math.PI * 2, 0, 0.03]} />
+					<sphereGeometry args={[2.02, 24, 24, 0, Math.PI * 2, 0, 0.03]} />
 					<meshStandardMaterial
 						color="#ffffff"
 						roughness={0.1}
@@ -344,8 +377,9 @@ function EyeballMesh({
 				</mesh>
 			</group>
 
+			{/* Gloss layer - reduced segments */}
 			<mesh>
-				<sphereGeometry args={[2.05, 64, 64]} />
+				<sphereGeometry args={[2.05, 48, 48]} />
 				<meshPhysicalMaterial
 					transparent
 					opacity={0.12}
@@ -366,7 +400,14 @@ export default function Eyeball3D() {
 		<div className="w-[338px] h-[338px]">
 			<Canvas
 				camera={{ position: [0, 0, 8], fov: 45 }}
-				gl={{ antialias: true, alpha: true }}
+				gl={{
+					antialias: true,
+					alpha: true,
+					powerPreference: "high-performance",
+					stencil: false,
+					depth: true,
+				}}
+				dpr={[1, 2]} // Cap pixel ratio for performance on high-DPI displays
 			>
 				<EyeballMesh
 					controlsRef={controlsRef as React.RefObject<OrbitControlsType>}

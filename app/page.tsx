@@ -22,9 +22,9 @@ export default function Home() {
 								width={200}
 								height={200}
 								priority
-                                sizes="400px"
+								sizes="(max-width: 768px) 90vw, 45vw"
 								className="w-full h-auto object-cover"
-                                decoding="sync"
+								decoding="sync"
 							/>
 							<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
 								Title
@@ -38,7 +38,7 @@ export default function Home() {
 								width={200}
 								height={200}
 								priority
-								sizes="400px"
+								sizes="(max-width: 768px) 90vw, 45vw"
 								className="w-full h-auto object-cover"
 								decoding="sync"
 							/>
@@ -53,10 +53,10 @@ export default function Home() {
 								alt="Work 3"
 								width={200}
 								height={200}
-								sizes="400px"
+								sizes="(max-width: 768px) 90vw, 45vw"
 								className="w-full h-auto object-cover"
 								loading="lazy"
-								decoding="sync"
+								decoding="async"
 							/>
 							<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
 								Title
@@ -69,10 +69,10 @@ export default function Home() {
 								alt="Work 4"
 								width={200}
 								height={200}
-								sizes="400px"
+								sizes="(max-width: 768px) 90vw, 45vw"
 								className="w-full h-auto object-cover"
 								loading="lazy"
-								decoding="sync"
+								decoding="async"
 							/>
 							<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
 								Title
@@ -108,9 +108,10 @@ export default function Home() {
 							src="/images/clothes1.webp"
 							alt="Clothes 1"
 							width={300}
-                            height={400}
+							height={400}
+							sizes="(max-width: 768px) 90vw, 30vw"
 							className="w-full h-auto object-cover"
-							decoding="sync"
+							decoding="async"
 							loading="lazy"
 						/>
 						<Image
@@ -118,8 +119,9 @@ export default function Home() {
 							alt="Clothes 2"
 							width={300}
 							height={400}
+							sizes="(max-width: 768px) 90vw, 30vw"
 							className="w-full h-auto object-cover"
-							decoding="sync"
+							decoding="async"
 							loading="lazy"
 						/>
 						<Image
@@ -127,8 +129,9 @@ export default function Home() {
 							alt="Clothes 3"
 							width={300}
 							height={400}
+							sizes="(max-width: 768px) 90vw, 30vw"
 							className="w-full h-auto object-cover"
-							decoding="sync"
+							decoding="async"
 							loading="lazy"
 						/>
 					</div>
