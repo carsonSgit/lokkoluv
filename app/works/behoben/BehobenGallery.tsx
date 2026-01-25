@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import BehobenFooter from "@/app/components/BehobenFooter";
 import GalleryGrid from "@/app/components/GalleryGrid";
@@ -24,20 +23,6 @@ export default function BehobenGallery({ pieces }: BehobenGalleryProps) {
 
 	return (
 		<main className="w-full min-h-screen">
-			{/* Navigation - Back to home */}
-			<nav className="absolute top-0 left-0 right-0 z-50">
-				<div className="max-w-[90%] mx-auto px-4 pt-6 md:pt-[1.75rem]">
-					<div className="flex justify-between items-start">
-						<Link
-							href="/"
-							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[44px] flex items-center"
-						>
-							HOME
-						</Link>
-					</div>
-				</div>
-			</nav>
-
 			{/* Header */}
 			<header className="pt-16 text-center">
 				<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">

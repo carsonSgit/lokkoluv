@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
@@ -9,6 +10,8 @@ export default function Navbar() {
 	const [showDropdown, setShowDropdown] = useState(false);
 	const navRef = useRef<HTMLElement>(null);
 	const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const pathname = usePathname();
+	const isHomePage = pathname === "/";
 
 	// Close menu when clicking outside
 	useEffect(() => {
@@ -53,7 +56,19 @@ export default function Navbar() {
 	return (
 		<nav ref={navRef} className="absolute top-0 left-0 right-0 z-50">
 			<div className="max-w-[90%] mx-auto px-4 pt-6 md:pt-[1.75rem]">
-				<div className="flex justify-end items-start">
+				<div className="flex justify-between items-start">
+					{/* HOME link - only shown on subpages */}
+					{!isHomePage ? (
+						<Link
+							href="/"
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[44px] flex items-center"
+						>
+							HOME
+						</Link>
+					) : (
+						<div />
+					)}
+
 					{/* Desktop Navigation */}
 					<div className="hidden md:flex items-center gap-16">
 						{/* WORKS with Dropdown */}
@@ -88,12 +103,12 @@ export default function Navbar() {
 							</div>
 						</div>
 
-						<a
-							href="#about"
+						<Link
+							href="/about"
 							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors"
 						>
 							ABOUT
-						</a>
+						</Link>
 					</div>
 
 					{/* Mobile Menu Button */}
@@ -129,6 +144,17 @@ export default function Navbar() {
 					}`}
 				>
 					<div className="flex flex-col items-end gap-4 pt-8 pb-4 bg-white">
+						{/* HOME link in mobile menu - only shown on subpages */}
+						{!isHomePage && (
+							<Link
+								href="/"
+								onClick={() => setIsOpen(false)}
+								className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[44px] flex items-center"
+							>
+								HOME
+							</Link>
+						)}
+
 						{/* WORKS with expandable submenu */}
 						<button
 							type="button"
@@ -180,7 +206,7 @@ export default function Navbar() {
 						</div>
 
 						<Link
-							href="#about"
+							href="/about"
 							onClick={() => setIsOpen(false)}
 							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[44px] flex items-center"
 						>
