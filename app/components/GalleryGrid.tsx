@@ -40,16 +40,12 @@ export default function GalleryGrid({ pieces, onPieceClick }: GalleryGridProps) 
 						width={400}
 						height={400}
 						sizes="(max-width: 768px) 90vw, 30vw"
-						className="w-full h-auto object-cover transition-transform duration-300"
+						className="w-full h-auto object-cover transition-transform duration-300 bg-[#f5f5f5]"
 						style={{ borderRadius: 0 }}
 						priority={index < 6}
 						loading={index < 6 ? "eager" : "lazy"}
-						decoding={index < 6 ? "sync" : "async"}
-						placeholder="blur"
-						blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+"
 					/>
 
-					{/* Hover Overlay */}
 					<div
 						className="absolute inset-0 bg-[#98989896] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center"
 						style={{ borderRadius: 0 }}

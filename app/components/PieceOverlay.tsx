@@ -16,14 +16,10 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-	// Focus trap and escape key handler
 	useEffect(() => {
 		if (!isOpen) return;
 
-		// Lock body scroll
 		document.body.style.overflow = "hidden";
-
-		// Focus the close button when opened
 		closeButtonRef.current?.focus();
 
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -31,7 +27,6 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 				onClose();
 			}
 
-			// Focus trap
 			if (e.key === "Tab" && overlayRef.current) {
 				const focusableElements = overlayRef.current.querySelectorAll(
 					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -67,7 +62,6 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 			aria-modal="true"
 			aria-labelledby="overlay-title"
 		>
-			{/* Header */}
 			<header className="pt-16 text-center">
 				<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
 					LOKKOLUV
@@ -80,7 +74,6 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 				</h2>
 			</header>
 
-			{/* BACK Button */}
 			<div className="container max-w-[90%] mx-auto px-4 pt-8">
 				<button
 					ref={closeButtonRef}
@@ -108,27 +101,22 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 				</button>
 			</div>
 
-			{/* Content */}
 			<div className="container max-w-[90%] mx-auto px-4 py-8">
 				<div className="flex flex-col md:flex-row gap-12 md:gap-16">
-					{/* Image */}
 					<div className="md:w-1/2">
 						<Image
 							src={getLocalImageUrl(piece.image_filename)}
 							alt={piece.title}
 							width={800}
 							height={800}
-							className="w-full h-auto object-cover"
+							sizes="(max-width: 768px) 90vw, 45vw"
+							className="w-full h-auto object-cover bg-[#f5f5f5]"
 							style={{ borderRadius: 0 }}
 							priority
-							placeholder="blur"
-							blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PC9zdmc+"
 						/>
 					</div>
 
-					{/* Details */}
 					<div className="md:w-1/2 space-y-8">
-						{/* Copyright and title */}
 						<div className="space-y-1">
 							<p className="text-black text-[20px] flex items-center gap-2">
 								<svg
@@ -149,7 +137,6 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 							<p className="text-black text-[20px]">by LOKKOLUV</p>
 						</div>
 
-						{/* Piece details - only show if value exists */}
 						<div className="space-y-2">
 							{piece.size && (
 								<div>
@@ -180,7 +167,6 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 							)}
 						</div>
 
-						{/* Contact for inquiry */}
 						<div className="pt-8 border-t border-black/20">
 							<p className="text-black text-[20px] font-bold tracking-[0.1em] mb-4">
 								CONTACT FOR INQUIRY
@@ -206,7 +192,6 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 				</div>
 			</div>
 
-			{/* Footer */}
 			<BehobenFooter />
 		</div>
 	);
