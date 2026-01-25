@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Image from "next/image";
-import type { BehobenPiece } from "@/lib/types";
+import { useEffect, useRef } from "react";
 import { getLocalImageUrl } from "@/lib/behoben-data";
+import type { BehobenPiece } from "@/lib/types";
 import BehobenFooter from "./BehobenFooter";
 
 interface PieceOverlayProps {
@@ -12,7 +12,11 @@ interface PieceOverlayProps {
 	onClose: () => void;
 }
 
-export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayProps) {
+export default function PieceOverlay({
+	piece,
+	isOpen,
+	onClose,
+}: PieceOverlayProps) {
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -29,10 +33,12 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 
 			if (e.key === "Tab" && overlayRef.current) {
 				const focusableElements = overlayRef.current.querySelectorAll(
-					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
 				);
 				const firstElement = focusableElements[0] as HTMLElement;
-				const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+				const lastElement = focusableElements[
+					focusableElements.length - 1
+				] as HTMLElement;
 
 				if (e.shiftKey && document.activeElement === firstElement) {
 					e.preventDefault();
@@ -127,8 +133,19 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 									xmlns="http://www.w3.org/2000/svg"
 									aria-hidden="true"
 								>
-									<circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-									<path d="M14.5 9.5C13.97 9.18 13.26 9 12.5 9C10.29 9 8.5 10.79 8.5 13C8.5 15.21 10.29 17 12.5 17C13.26 17 13.97 16.82 14.5 16.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+									<circle
+										cx="12"
+										cy="12"
+										r="10"
+										stroke="currentColor"
+										strokeWidth="2"
+									/>
+									<path
+										d="M14.5 9.5C13.97 9.18 13.26 9 12.5 9C10.29 9 8.5 10.79 8.5 13C8.5 15.21 10.29 17 12.5 17C13.26 17 13.97 16.82 14.5 16.5"
+										stroke="currentColor"
+										strokeWidth="2"
+										strokeLinecap="round"
+									/>
 								</svg>
 								<span className="font-bold">
 									{piece.title}, {piece.year}
@@ -140,28 +157,36 @@ export default function PieceOverlay({ piece, isOpen, onClose }: PieceOverlayPro
 						<div className="space-y-2">
 							{piece.size && (
 								<div>
-									<p className="text-black text-[20px] font-bold tracking-[0.1em]">SIZE:</p>
+									<p className="text-black text-[20px] font-bold tracking-[0.1em]">
+										SIZE:
+									</p>
 									<p className="text-black text-[20px]">{piece.size}</p>
 								</div>
 							)}
 
 							{piece.mediums && (
 								<div>
-									<p className="text-black text-[20px] font-bold tracking-[0.1em]">MEDIUMS:</p>
+									<p className="text-black text-[20px] font-bold tracking-[0.1em]">
+										MEDIUMS:
+									</p>
 									<p className="text-black text-[20px]">{piece.mediums}</p>
 								</div>
 							)}
 
 							{piece.techniques && (
 								<div>
-									<p className="text-black text-[20px] font-bold tracking-[0.1em]">TECHNIQUES:</p>
+									<p className="text-black text-[20px] font-bold tracking-[0.1em]">
+										TECHNIQUES:
+									</p>
 									<p className="text-black text-[20px]">{piece.techniques}</p>
 								</div>
 							)}
 
 							{piece.surface && (
 								<div>
-									<p className="text-black text-[20px] font-bold tracking-[0.1em]">SURFACE:</p>
+									<p className="text-black text-[20px] font-bold tracking-[0.1em]">
+										SURFACE:
+									</p>
 									<p className="text-black text-[20px]">{piece.surface}</p>
 								</div>
 							)}

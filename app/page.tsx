@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Eyeball3D from "./threejs/Eyeball3D";
 
-
-
 export default function Home() {
 	return (
 		<main className="w-full">
@@ -99,9 +97,9 @@ export default function Home() {
 
 			<div className="container max-w-[90%] mx-auto px-4">
 				<section>
-				<h2 className="font-bold text-[clamp(2rem,7vw,8rem)] mb-6 tracking-tight text-center">
-					7 SINS COMING SOON
-				</h2>
+					<h2 className="font-bold text-[clamp(2rem,7vw,8rem)] mb-6 tracking-tight text-center">
+						7 SINS COMING SOON
+					</h2>
 
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
 						<Image

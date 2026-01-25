@@ -1,16 +1,19 @@
 "use client";
 
-import { useCallback, useRef } from "react";
 import Image from "next/image";
-import type { BehobenPiece } from "@/lib/types";
+import { useCallback, useRef } from "react";
 import { getLocalImageUrl } from "@/lib/behoben-data";
+import type { BehobenPiece } from "@/lib/types";
 
 interface GalleryGridProps {
 	pieces: BehobenPiece[];
 	onPieceClick: (piece: BehobenPiece) => void;
 }
 
-export default function GalleryGrid({ pieces, onPieceClick }: GalleryGridProps) {
+export default function GalleryGrid({
+	pieces,
+	onPieceClick,
+}: GalleryGridProps) {
 	const preloadedImagesRef = useRef<Set<string>>(new Set());
 
 	const handleMouseEnter = useCallback((piece: BehobenPiece) => {
@@ -53,9 +56,7 @@ export default function GalleryGrid({ pieces, onPieceClick }: GalleryGridProps) 
 						<h3 className="text-white font-extrabold text-[clamp(1.25rem,3vw,2rem)] tracking-tight">
 							{piece.title}
 						</h3>
-						<p className="text-white text-sm tracking-[0.2em] mt-2">
-							SEE MORE
-						</p>
+						<p className="text-white text-sm tracking-[0.2em] mt-2">SEE MORE</p>
 					</div>
 				</button>
 			))}

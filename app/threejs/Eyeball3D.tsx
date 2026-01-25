@@ -99,8 +99,9 @@ type OrbitControlsType = {
 const getIsMobile = () => {
 	if (typeof window === "undefined") return false;
 	return (
-		/Android|webOS|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-		window.innerWidth < 768
+		/Android|webOS|iPhone|iPad|IEMobile|Opera Mini/i.test(
+			navigator.userAgent,
+		) || window.innerWidth < 768
 	);
 };
 

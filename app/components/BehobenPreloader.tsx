@@ -3,7 +3,11 @@
 import { useEffect } from "react";
 import { behobenPieces, getLocalImageUrl } from "@/lib/behoben-data";
 
-function getNextImageUrl(src: string, width: number, quality: number = 75): string {
+function getNextImageUrl(
+	src: string,
+	width: number,
+	quality: number = 75,
+): string {
 	return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`;
 }
 

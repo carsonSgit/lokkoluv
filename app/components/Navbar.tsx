@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -57,6 +57,7 @@ export default function Navbar() {
 					{/* Desktop Navigation */}
 					<div className="hidden md:flex items-center gap-16">
 						{/* WORKS with Dropdown */}
+						{/* biome-ignore lint/a11y/noStaticElementInteractions: Hover container for dropdown - keyboard navigation handled by inner button */}
 						<div
 							className="relative"
 							onMouseEnter={handleDropdownEnter}
@@ -147,6 +148,7 @@ export default function Navbar() {
 									viewBox="0 0 12 12"
 									fill="none"
 									xmlns="http://www.w3.org/2000/svg"
+									aria-hidden="true"
 								>
 									<path
 										d="M2 4L6 8L10 4"
@@ -177,13 +179,13 @@ export default function Navbar() {
 							</Link>
 						</div>
 
-						<a
+						<Link
 							href="#about"
 							onClick={() => setIsOpen(false)}
 							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[44px] flex items-center"
 						>
 							ABOUT
-						</a>
+						</Link>
 					</div>
 				</div>
 			</div>

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import type { BehobenPiece } from "@/lib/types";
+import { useState } from "react";
+import BehobenFooter from "@/app/components/BehobenFooter";
 import GalleryGrid from "@/app/components/GalleryGrid";
 import PieceOverlay from "@/app/components/PieceOverlay";
-import BehobenFooter from "@/app/components/BehobenFooter";
+import type { BehobenPiece } from "@/lib/types";
 
 interface BehobenGalleryProps {
 	pieces: BehobenPiece[];
