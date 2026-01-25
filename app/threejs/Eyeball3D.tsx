@@ -95,6 +95,15 @@ type OrbitControlsType = {
 	update: () => void;
 } | null;
 
+// Check mobile status synchronously to avoid race condition with useFrame
+const getIsMobile = () => {
+	if (typeof window === "undefined") return false;
+	return (
+		/Android|webOS|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+		window.innerWidth < 768
+	);
+};
+
 function EyeballMesh({
 	controlsRef,
 }: {
@@ -108,9 +117,9 @@ function EyeballMesh({
 	const isUserInteractingRef = useRef(false);
 	const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-	// Idle animation state
-	const [isMobile, setIsMobile] = useState(false);
-	const isIdleRef = useRef(false);
+	// Idle animation state - initialize with mobile check to avoid race condition
+	const [isMobile, setIsMobile] = useState(getIsMobile);
+	const isIdleRef = useRef(getIsMobile());
 	const afkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const randomTargetRef = useRef({ x: 0, y: 0 });
 	const nextTargetTimeRef = useRef(0);
@@ -122,19 +131,16 @@ function EyeballMesh({
 	const lastMouseUpdateRef = useRef(0);
 	const mousePositionRef = useRef({ x: 0, y: 0 });
 
+	// Handle resize events to update mobile state dynamically
 	useEffect(() => {
-		const checkMobile = () => {
-			const mobile =
-				/Android|webOS|iPhone|iPad|IEMobile|Opera Mini/i.test(
-					navigator.userAgent,
-				) || window.innerWidth < 768;
+		const handleResize = () => {
+			const mobile = getIsMobile();
 			setIsMobile(mobile);
 			isIdleRef.current = mobile;
 		};
 
-		checkMobile();
-		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
 	const handleMouseMove = useCallback(
