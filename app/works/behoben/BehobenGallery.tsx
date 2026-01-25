@@ -3,6 +3,7 @@
 import { useState } from "react";
 import BehobenFooter from "@/app/components/BehobenFooter";
 import GalleryGrid from "@/app/components/GalleryGrid";
+import PageHeader from "@/app/components/PageHeader";
 import PieceOverlay from "@/app/components/PieceOverlay";
 import type { BehobenPiece } from "@/lib/types";
 
@@ -23,15 +24,7 @@ export default function BehobenGallery({ pieces }: BehobenGalleryProps) {
 
 	return (
 		<main className="w-full min-h-screen">
-			{/* Header */}
-			<header className="pt-16 text-center">
-				<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
-					LOKKOLUV
-				</h1>
-				<h2 className="font-medium text-[clamp(1.875rem,4.5vw,3rem)] tracking-[0.3em] text-black mt-2">
-					BEHOBEN
-				</h2>
-			</header>
+			<PageHeader subtitle="BEHOBEN" />
 
 			{/* Gallery Grid */}
 			<div className="container max-w-[90%] mx-auto px-4 py-12">

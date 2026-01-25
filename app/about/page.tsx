@@ -1,17 +1,10 @@
 import BehobenFooter from "@/app/components/BehobenFooter";
+import PageHeader from "@/app/components/PageHeader";
 
 export default function AboutPage() {
 	return (
 		<main className="w-full min-h-screen">
-			{/* Header */}
-			<header className="pt-16 text-center">
-				<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
-					LOKKOLUV
-				</h1>
-				<h2 className="font-medium text-[clamp(1.875rem,4.5vw,3rem)] tracking-[0.3em] text-black mt-2">
-					ABOUT
-				</h2>
-			</header>
+			<PageHeader subtitle="ABOUT" />
 
 			{/* Story Content */}
 			<div className="container max-w-[90%] mx-auto px-4 py-12">

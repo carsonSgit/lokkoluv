@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { getLocalImageUrl } from "@/lib/behoben-data";
 import type { BehobenPiece } from "@/lib/types";
 import BehobenFooter from "./BehobenFooter";
+import Navbar from "./Navbar";
 
 interface PieceOverlayProps {
 	piece: BehobenPiece;
@@ -68,10 +70,13 @@ export default function PieceOverlay({
 			aria-modal="true"
 			aria-labelledby="overlay-title"
 		>
+			<Navbar />
 			<header className="pt-16 text-center">
-				<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
-					LOKKOLUV
-				</h1>
+				<Link href="/">
+					<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
+						LOKKOLUV
+					</h1>
+				</Link>
 				<h2
 					id="overlay-title"
 					className="font-medium text-[clamp(1.875rem,4.5vw,3rem)] tracking-[0.3em] text-black mt-2"

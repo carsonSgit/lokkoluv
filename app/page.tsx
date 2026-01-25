@@ -1,14 +1,11 @@
 import Image from "next/image";
+import PageHeader from "./components/PageHeader";
 import Eyeball3D from "./threejs/Eyeball3D";
 
 export default function Home() {
 	return (
 		<main className="w-full">
-			<header className="pt-16 text-center">
-				<h1 className="font-extrabold text-[clamp(3rem,10vw,9rem)] text-black">
-					LOKKOLUV
-				</h1>
-			</header>
+			<PageHeader />
 
 			<div className="container max-w-[90%] mx-auto px-4 pb-12">
 				<section className="mt-12">
