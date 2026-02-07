@@ -4,6 +4,8 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import BehobenPreloader from "./components/BehobenPreloader";
 import Navbar from "./components/Navbar";
+import { ThemeProvider } from "@/lib/context/ThemeContext";
+import { getPublicTheme } from "@/lib/public-data";
 
 const tenorSans = Tenor_Sans({
 	weight: "400",
@@ -19,17 +21,21 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const theme = await getPublicTheme();
+
 	return (
 		<html lang="en">
 			<body className={`${tenorSans.className} antialiased`}>
-				<BehobenPreloader />
-				<Navbar />
-				{children}
+				<ThemeProvider initialTheme={theme}>
+					<BehobenPreloader />
+					<Navbar />
+					{children}
+				</ThemeProvider>
 				<Analytics />
 			</body>
 		</html>

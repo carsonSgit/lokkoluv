@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { getLocalImageUrl } from "@/lib/behoben-data";
-import type { BehobenPiece } from "@/lib/types";
+import { getImageUrl } from "@/lib/behoben-data";
+import type { BehobenPiece, SiteSettings } from "@/lib/types";
+import { defaultSettings } from "@/lib/fallbacks/settings";
 import BehobenFooter from "./BehobenFooter";
 import Navbar from "./Navbar";
 
@@ -12,17 +13,21 @@ interface PieceOverlayProps {
 	piece: BehobenPiece;
 	isOpen: boolean;
 	onClose: () => void;
+	settings?: SiteSettings;
 }
 
 export default function PieceOverlay({
 	piece,
 	isOpen,
 	onClose,
+	settings = defaultSettings,
 }: PieceOverlayProps) {
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
 	const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
 	const [isHovering, setIsHovering] = useState(false);
+
+	const imageUrl = getImageUrl(piece);
 
 	useEffect(() => {
 		if (!isOpen) return;
@@ -133,7 +138,7 @@ export default function PieceOverlay({
 								onMouseLeave={() => setIsHovering(false)}
 							>
 								<Image
-									src={getLocalImageUrl(piece.image_filename)}
+									src={imageUrl}
 									alt={piece.title}
 									fill
 									sizes="(max-width: 768px) 90vw, (max-width: 1280px) 45vw, 600px"
@@ -155,7 +160,7 @@ export default function PieceOverlay({
 								<div
 									className="absolute left-[calc(100%+20px)] top-0 w-[400px] h-[400px] overflow-hidden bg-white border border-black/10 shadow-xl z-10 hidden xl:block"
 									style={{
-										backgroundImage: `url(${getLocalImageUrl(piece.image_filename)})`,
+										backgroundImage: `url(${imageUrl})`,
 										backgroundSize: "1200px 1200px",
 										backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
 									}}
@@ -217,19 +222,21 @@ export default function PieceOverlay({
 								CONTACT FOR INQUIRY
 							</p>
 							<div className="space-y-1">
+								{settings.instagram_url && (
+									<a
+										href={settings.instagram_url}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-black text-[20px] hover:underline underline-offset-4 block transition-colors cursor-pointer"
+									>
+										{settings.instagram_handle}
+									</a>
+								)}
 								<a
-									href="https://www.instagram.com/lokkoluv/"
-									target="_blank"
-									rel="noopener noreferrer"
+									href={`mailto:${settings.contact_email}`}
 									className="text-black text-[20px] hover:underline underline-offset-4 block transition-colors cursor-pointer"
 								>
-									@lokkoluv
-								</a>
-								<a
-									href="mailto:inquiry@lokkoluv.com"
-									className="text-black text-[20px] hover:underline underline-offset-4 block transition-colors cursor-pointer"
-								>
-									inquiry@lokkoluv.com
+									{settings.contact_email}
 								</a>
 							</div>
 						</div>
@@ -237,7 +244,7 @@ export default function PieceOverlay({
 				</div>
 			</div>
 
-			<BehobenFooter />
+			<BehobenFooter settings={settings} />
 		</div>
 	);
 }

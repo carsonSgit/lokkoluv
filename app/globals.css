@@ -2,10 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--color-primary: #000000;
+	--color-background: #ffffff;
+	--font-heading: "Tenor Sans", serif;
+	--font-body: "Tenor Sans", serif;
+	--size-heading-xl: clamp(3rem, 10vw, 9rem);
+}
+
 body {
 	@apply bg-white;
+	background-color: var(--color-background);
 }
 
 ::-webkit-scrollbar {
 	display: none;
+}
+
+/* Utility classes for theme variables */
+.text-theme-primary {
+	color: var(--color-primary);
+}
+
+.bg-theme-background {
+	background-color: var(--color-background);
+}
+
+.font-theme-heading {
+	font-family: var(--font-heading);
+}
+
+.font-theme-body {
+	font-family: var(--font-body);
+}
+
+.text-heading-xl {
+	font-size: var(--size-heading-xl);
 }

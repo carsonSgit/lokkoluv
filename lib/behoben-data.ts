@@ -191,3 +191,14 @@ export async function fetchBehobenPieces(): Promise<BehobenPiece[]> {
 export function getLocalImageUrl(filename: string): string {
 	return `/images/behoben/${filename}`;
 }
+
+// Get image URL - supports both local and Storage URLs
+export function getImageUrl(piece: BehobenPiece): string {
+	// Check if piece has a Storage URL (admin-uploaded)
+	const adminPiece = piece as BehobenPiece & { image_url?: string | null };
+	if (adminPiece.image_url) {
+		return adminPiece.image_url;
+	}
+	// Fall back to local image
+	return getLocalImageUrl(piece.image_filename);
+}

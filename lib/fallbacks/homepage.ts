@@ -1,0 +1,98 @@
+import type { HomepageSection, HomepageItem } from "@/lib/types";
+
+export const defaultHomepageSections: HomepageSection[] = [
+	{
+		id: "works",
+		section_key: "works",
+		section_name: "Work Previews",
+		is_visible: true,
+		display_order: 1,
+	},
+	{
+		id: "banner",
+		section_key: "banner",
+		section_name: "Dark Banner",
+		is_visible: true,
+		display_order: 2,
+	},
+	{
+		id: "clothing",
+		section_key: "clothing",
+		section_name: "Clothing Section",
+		is_visible: true,
+		display_order: 3,
+	},
+	{
+		id: "social",
+		section_key: "social",
+		section_name: "Social Links",
+		is_visible: true,
+		display_order: 4,
+	},
+];
+
+export const defaultHomepageItems: HomepageItem[] = [
+	{
+		id: "work-1",
+		item_type: "work",
+		title: "Title",
+		image_filename: "work1.webp",
+		image_url: null,
+		display_order: 1,
+		is_visible: true,
+	},
+	{
+		id: "work-2",
+		item_type: "work",
+		title: "Title",
+		image_filename: "work2.webp",
+		image_url: null,
+		display_order: 2,
+		is_visible: true,
+	},
+	{
+		id: "work-3",
+		item_type: "work",
+		title: "Title",
+		image_filename: "work3.webp",
+		image_url: null,
+		display_order: 3,
+		is_visible: true,
+	},
+	{
+		id: "work-4",
+		item_type: "work",
+		title: "Title",
+		image_filename: "work4.webp",
+		image_url: null,
+		display_order: 4,
+		is_visible: true,
+	},
+	{
+		id: "clothing-1",
+		item_type: "clothing",
+		title: null,
+		image_filename: "clothes1.webp",
+		image_url: null,
+		display_order: 1,
+		is_visible: true,
+	},
+	{
+		id: "clothing-2",
+		item_type: "clothing",
+		title: null,
+		image_filename: "clothes2.webp",
+		image_url: null,
+		display_order: 2,
+		is_visible: true,
+	},
+	{
+		id: "clothing-3",
+		item_type: "clothing",
+		title: null,
+		image_filename: "clothes3.webp",
+		image_url: null,
+		display_order: 3,
+		is_visible: true,
+	},
+];

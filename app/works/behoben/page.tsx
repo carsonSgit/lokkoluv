@@ -1,8 +1,12 @@
-import { fetchBehobenPieces, getLocalImageUrl } from "@/lib/behoben-data";
+import { fetchBehobenPieces, getImageUrl } from "@/lib/behoben-data";
+import { getPublicSiteSettings } from "@/lib/public-data";
 import BehobenGallery from "./BehobenGallery";
 
 export default async function BehobenPage() {
-	const pieces = await fetchBehobenPieces();
+	const [pieces, settings] = await Promise.all([
+		fetchBehobenPieces(),
+		getPublicSiteSettings(),
+	]);
 
 	return (
 		<>
@@ -12,10 +16,10 @@ export default async function BehobenPage() {
 					key={piece.id}
 					rel="preload"
 					as="image"
-					href={getLocalImageUrl(piece.image_filename)}
+					href={getImageUrl(piece)}
 				/>
 			))}
-			<BehobenGallery pieces={pieces} />
+			<BehobenGallery pieces={pieces} settings={settings} />
 		</>
 	);
 }

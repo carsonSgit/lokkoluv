@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useRef } from "react";
-import { getLocalImageUrl } from "@/lib/behoben-data";
+import { getImageUrl } from "@/lib/behoben-data";
 import type { BehobenPiece } from "@/lib/types";
 
 interface GalleryGridProps {
@@ -17,7 +17,7 @@ export default function GalleryGrid({
 	const preloadedImagesRef = useRef<Set<string>>(new Set());
 
 	const handleMouseEnter = useCallback((piece: BehobenPiece) => {
-		const imageUrl = getLocalImageUrl(piece.image_filename);
+		const imageUrl = getImageUrl(piece);
 
 		if (preloadedImagesRef.current.has(imageUrl)) return;
 
@@ -38,7 +38,7 @@ export default function GalleryGrid({
 					style={{ borderRadius: 0 }}
 				>
 					<Image
-						src={getLocalImageUrl(piece.image_filename)}
+						src={getImageUrl(piece)}
 						alt={piece.title}
 						width={400}
 						height={400}

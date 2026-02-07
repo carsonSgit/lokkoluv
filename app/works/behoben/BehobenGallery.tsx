@@ -5,13 +5,14 @@ import BehobenFooter from "@/app/components/BehobenFooter";
 import GalleryGrid from "@/app/components/GalleryGrid";
 import PageHeader from "@/app/components/PageHeader";
 import PieceOverlay from "@/app/components/PieceOverlay";
-import type { BehobenPiece } from "@/lib/types";
+import type { BehobenPiece, SiteSettings } from "@/lib/types";
 
 interface BehobenGalleryProps {
 	pieces: BehobenPiece[];
+	settings: SiteSettings;
 }
 
-export default function BehobenGallery({ pieces }: BehobenGalleryProps) {
+export default function BehobenGallery({ pieces, settings }: BehobenGalleryProps) {
 	const [selectedPiece, setSelectedPiece] = useState<BehobenPiece | null>(null);
 
 	const handlePieceClick = (piece: BehobenPiece) => {
@@ -32,7 +33,7 @@ export default function BehobenGallery({ pieces }: BehobenGalleryProps) {
 			</div>
 
 			{/* Footer */}
-			<BehobenFooter />
+			<BehobenFooter settings={settings} />
 
 			{/* Piece Overlay */}
 			{selectedPiece && (
@@ -40,6 +41,7 @@ export default function BehobenGallery({ pieces }: BehobenGalleryProps) {
 					piece={selectedPiece}
 					isOpen={!!selectedPiece}
 					onClose={handleCloseOverlay}
+					settings={settings}
 				/>
 			)}
 		</main>
