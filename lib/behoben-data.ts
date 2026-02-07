@@ -1,6 +1,7 @@
+import { supabase } from "./supabase";
 import type { BehobenPiece } from "./types";
 
-// Local behoben pieces data - no external API calls needed
+// Local behoben pieces data - fallback if Supabase fetch fails
 export const behobenPieces: BehobenPiece[] = [
 	{
 		id: "1",
@@ -158,31 +159,33 @@ export const behobenPieces: BehobenPiece[] = [
 		techniques: null,
 		surface: null,
 	},
-	{
-		id: "14",
-		piece_number: 14,
-		title: "BEHOBEN XIV",
-		year: 2024,
-		image_filename: "behoben_14.webp",
-		display_order: 14,
-		size: null,
-		mediums: null,
-		techniques: null,
-		surface: null,
-	},
-	{
-		id: "15",
-		piece_number: 15,
-		title: "BEHOBEN XV",
-		year: 2024,
-		image_filename: "behoben_15.webp",
-		display_order: 15,
-		size: null,
-		mediums: null,
-		techniques: null,
-		surface: null,
-	},
 ];
+
+// Fetch behoben pieces from Supabase with local fallback
+export async function fetchBehobenPieces(): Promise<BehobenPiece[]> {
+	// Return local data if Supabase is not configured
+	if (!supabase) {
+		return behobenPieces;
+	}
+
+	try {
+		const { data, error } = await supabase
+			.from("behoben_pieces")
+			.select("*")
+			.lte("piece_number", 13)
+			.order("display_order", { ascending: true });
+
+		if (error) {
+			console.error("Supabase fetch error:", error);
+			return behobenPieces;
+		}
+
+		return data ?? behobenPieces;
+	} catch (error) {
+		console.error("Failed to fetch from Supabase:", error);
+		return behobenPieces;
+	}
+}
 
 // Get local image path - no external API calls
 export function getLocalImageUrl(filename: string): string {

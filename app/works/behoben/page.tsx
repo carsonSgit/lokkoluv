@@ -1,11 +1,13 @@
-import { behobenPieces, getLocalImageUrl } from "@/lib/behoben-data";
+import { fetchBehobenPieces, getLocalImageUrl } from "@/lib/behoben-data";
 import BehobenGallery from "./BehobenGallery";
 
-export default function BehobenPage() {
+export default async function BehobenPage() {
+	const pieces = await fetchBehobenPieces();
+
 	return (
 		<>
 			{/* Preload first 6 gallery images for instant above-fold rendering */}
-			{behobenPieces.slice(0, 6).map((piece) => (
+			{pieces.slice(0, 6).map((piece) => (
 				<link
 					key={piece.id}
 					rel="preload"
@@ -13,7 +15,7 @@ export default function BehobenPage() {
 					href={getLocalImageUrl(piece.image_filename)}
 				/>
 			))}
-			<BehobenGallery pieces={behobenPieces} />
+			<BehobenGallery pieces={pieces} />
 		</>
 	);
 }

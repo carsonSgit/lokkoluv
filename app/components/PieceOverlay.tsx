@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getLocalImageUrl } from "@/lib/behoben-data";
 import type { BehobenPiece } from "@/lib/types";
 import BehobenFooter from "./BehobenFooter";
@@ -21,6 +21,8 @@ export default function PieceOverlay({
 }: PieceOverlayProps) {
 	const overlayRef = useRef<HTMLDivElement>(null);
 	const closeButtonRef = useRef<HTMLButtonElement>(null);
+	const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+	const [isHovering, setIsHovering] = useState(false);
 
 	useEffect(() => {
 		if (!isOpen) return;
@@ -59,6 +61,13 @@ export default function PieceOverlay({
 			document.removeEventListener("keydown", handleKeyDown);
 		};
 	}, [isOpen, onClose]);
+
+	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+		const rect = e.currentTarget.getBoundingClientRect();
+		const x = ((e.clientX - rect.left) / rect.width) * 100;
+		const y = ((e.clientY - rect.top) / rect.height) * 100;
+		setZoomPosition({ x, y });
+	};
 
 	if (!isOpen) return null;
 
@@ -114,44 +123,50 @@ export default function PieceOverlay({
 
 			<div className="container max-w-[90%] mx-auto px-4 py-8">
 				<div className="flex flex-col md:flex-row gap-12 md:gap-16">
-					<div className="md:w-1/2">
-						<Image
-							src={getLocalImageUrl(piece.image_filename)}
-							alt={piece.title}
-							width={800}
-							height={800}
-							sizes="(max-width: 768px) 90vw, 45vw"
-							className="w-full h-auto object-cover bg-[#f5f5f5]"
-							style={{ borderRadius: 0 }}
-							priority
-						/>
+					<div className="md:w-1/2 flex justify-center">
+						<div className="relative group w-full max-w-[600px]">
+							<div
+								role="img"
+								className="w-full max-w-[600px] aspect-square relative overflow-hidden cursor-crosshair bg-[#f5f5f5]"
+								onMouseMove={handleMouseMove}
+								onMouseEnter={() => setIsHovering(true)}
+								onMouseLeave={() => setIsHovering(false)}
+							>
+								<Image
+									src={getLocalImageUrl(piece.image_filename)}
+									alt={piece.title}
+									fill
+									sizes="(max-width: 768px) 90vw, (max-width: 1280px) 45vw, 600px"
+									className="object-contain"
+									priority
+								/>
+								{isHovering && (
+									<div
+										className="absolute w-[120px] h-[120px] border-2 border-black/40 pointer-events-none bg-black/5 hidden xl:block"
+										style={{
+											left: `${zoomPosition.x}%`,
+											top: `${zoomPosition.y}%`,
+											transform: "translate(-50%, -50%)",
+										}}
+									/>
+								)}
+							</div>
+							{isHovering && (
+								<div
+									className="absolute left-[calc(100%+20px)] top-0 w-[400px] h-[400px] overflow-hidden bg-white border border-black/10 shadow-xl z-10 hidden xl:block"
+									style={{
+										backgroundImage: `url(${getLocalImageUrl(piece.image_filename)})`,
+										backgroundSize: "1200px 1200px",
+										backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`,
+									}}
+								/>
+							)}
+						</div>
 					</div>
 
 					<div className="md:w-1/2 space-y-8">
 						<div className="space-y-1">
 							<p className="text-black text-[20px] flex items-center gap-2">
-								<svg
-									width="20"
-									height="20"
-									viewBox="0 0 24 24"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									aria-hidden="true"
-								>
-									<circle
-										cx="12"
-										cy="12"
-										r="10"
-										stroke="currentColor"
-										strokeWidth="2"
-									/>
-									<path
-										d="M14.5 9.5C13.97 9.18 13.26 9 12.5 9C10.29 9 8.5 10.79 8.5 13C8.5 15.21 10.29 17 12.5 17C13.26 17 13.97 16.82 14.5 16.5"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-									/>
-								</svg>
 								<span className="font-bold">
 									{piece.title}, {piece.year}
 								</span>
