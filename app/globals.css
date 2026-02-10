@@ -6,8 +6,19 @@
 	--color-primary: #000000;
 	--color-background: #ffffff;
 	--font-heading: "Tenor Sans", serif;
-	--font-body: "Tenor Sans", serif;
+	--font-body: "Work Sans", sans-serif;
 	--size-heading-xl: clamp(3rem, 10vw, 9rem);
+}
+
+@layer base {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: var(--font-heading);
+	}
 }
 
 body {

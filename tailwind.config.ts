@@ -9,9 +9,8 @@ const config: Config = {
 	theme: {
 		extend: {
 			fontFamily: {
-				mplus: ['"M PLUS 1p"', "sans-serif"],
-				inter: ["Inter", "sans-serif"],
-				amiko: ["Amiko", "sans-serif"],
+				heading: ["var(--font-heading)", "serif"],
+				body: ["var(--font-body)", "sans-serif"],
 			},
 			letterSpacing: {
 				"ultra-wide": "27.84px",
