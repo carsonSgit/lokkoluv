@@ -1,8 +1,8 @@
 "use client";
 
+import type { Session, User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase-browser";
-import type { User, Session } from "@supabase/supabase-js";
 
 export function useAuth() {
 	const [user, setUser] = useState<User | null>(null);

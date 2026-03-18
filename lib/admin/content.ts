@@ -1,9 +1,9 @@
-import { supabaseAdmin } from "@/lib/supabase-admin";
-import type { ContentBlock } from "@/lib/types";
 import {
 	defaultContentBlocks,
 	getDefaultContentBlock,
 } from "@/lib/fallbacks/content";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+import type { ContentBlock } from "@/lib/types";
 
 export async function getContentBlocks(): Promise<ContentBlock[]> {
 	try {
@@ -20,7 +20,9 @@ export async function getContentBlocks(): Promise<ContentBlock[]> {
 	}
 }
 
-export async function getContentBlock(key: string): Promise<ContentBlock | null> {
+export async function getContentBlock(
+	key: string,
+): Promise<ContentBlock | null> {
 	try {
 		const { data, error } = await supabaseAdmin
 			.from("content_blocks")

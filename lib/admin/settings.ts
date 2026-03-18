@@ -1,6 +1,6 @@
+import { defaultSettings } from "@/lib/fallbacks/settings";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { SiteSettings } from "@/lib/types";
-import { defaultSettings } from "@/lib/fallbacks/settings";
 
 export async function getSiteSettings(): Promise<SiteSettings> {
 	try {

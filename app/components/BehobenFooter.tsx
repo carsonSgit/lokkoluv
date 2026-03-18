@@ -1,5 +1,5 @@
-import type { SiteSettings } from "@/lib/types";
 import { defaultSettings } from "@/lib/fallbacks/settings";
+import type { SiteSettings } from "@/lib/types";
 import Eyeball3D from "../threejs/Eyeball3D";
 import SocialLinks from "./SocialLinks";
 

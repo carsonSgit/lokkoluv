@@ -1,7 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { type SiteConfig, defaultSiteConfig } from "../config/siteConfig";
+import type React from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { defaultSiteConfig, type SiteConfig } from "../config/siteConfig";
 
 type CustomizationContextType = {
 	config: SiteConfig;
@@ -9,11 +10,15 @@ type CustomizationContextType = {
 	resetConfig: () => void;
 };
 
-const CustomizationContext = createContext<CustomizationContextType | undefined>(
-	undefined
-);
+const CustomizationContext = createContext<
+	CustomizationContextType | undefined
+>(undefined);
 
-export function CustomizationProvider({ children }: { children: React.ReactNode }) {
+export function CustomizationProvider({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	const [config, setConfig] = useState<SiteConfig>(defaultSiteConfig);
 	const [mounted, setMounted] = useState(false);
 
@@ -33,7 +38,7 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
 	// Apply CSS variables and save to localStorage on change
 	useEffect(() => {
 		if (!mounted) return;
-		
+
 		const root = document.documentElement;
 		root.style.setProperty("--color-primary", config.primaryColor);
 		root.style.setProperty("--color-background", config.backgroundColor);
@@ -59,7 +64,9 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
 	};
 
 	return (
-		<CustomizationContext.Provider value={{ config, updateConfig, resetConfig }}>
+		<CustomizationContext.Provider
+			value={{ config, updateConfig, resetConfig }}
+		>
 			{children}
 		</CustomizationContext.Provider>
 	);
@@ -68,7 +75,9 @@ export function CustomizationProvider({ children }: { children: React.ReactNode 
 export function useCustomization() {
 	const context = useContext(CustomizationContext);
 	if (context === undefined) {
-		throw new Error("useCustomization must be used within a CustomizationProvider");
+		throw new Error(
+			"useCustomization must be used within a CustomizationProvider",
+		);
 	}
 	return context;
 }

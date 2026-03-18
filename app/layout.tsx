@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Tenor_Sans, Work_Sans, Geist } from "next/font/google";
+import { Geist, Tenor_Sans, Work_Sans } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import BehobenPreloader from "./components/BehobenPreloader";
-import Navbar from "./components/Navbar";
-import { ThemeProvider } from "@/lib/context/ThemeContext";
 import { CustomizationProvider } from "@/lib/context/CustomizationContext";
+import { ThemeProvider } from "@/lib/context/ThemeContext";
 import { getPublicTheme } from "@/lib/public-data";
 import { cn } from "@/lib/utils";
+import BehobenPreloader from "./components/BehobenPreloader";
+import Navbar from "./components/Navbar";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const tenorSans = Tenor_Sans({
 	weight: "400",
@@ -42,7 +42,9 @@ export default async function RootLayout({
 
 	return (
 		<html lang="en" className={cn("font-sans", geist.variable)}>
-			<body className={`${workSans.variable} ${tenorSans.variable} ${workSans.className} antialiased`}>
+			<body
+				className={`${workSans.variable} ${tenorSans.variable} ${workSans.className} antialiased`}
+			>
 				<CustomizationProvider>
 					<ThemeProvider initialTheme={theme}>
 						<BehobenPreloader />

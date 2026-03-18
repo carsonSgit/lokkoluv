@@ -204,10 +204,14 @@ export function getImageUrl(piece: BehobenPiece): string {
 }
 
 // Fetch a single behoben piece by piece_number
-export async function fetchBehobenPieceByNumber(pieceNumber: number): Promise<BehobenPiece | null> {
+export async function fetchBehobenPieceByNumber(
+	pieceNumber: number,
+): Promise<BehobenPiece | null> {
 	// Return local data if Supabase is not configured
 	if (!supabase) {
-		return behobenPieces.find((piece) => piece.piece_number === pieceNumber) || null;
+		return (
+			behobenPieces.find((piece) => piece.piece_number === pieceNumber) || null
+		);
 	}
 
 	try {
@@ -219,12 +223,17 @@ export async function fetchBehobenPieceByNumber(pieceNumber: number): Promise<Be
 
 		if (error) {
 			console.error("Supabase fetch error:", error);
-			return behobenPieces.find((piece) => piece.piece_number === pieceNumber) || null;
+			return (
+				behobenPieces.find((piece) => piece.piece_number === pieceNumber) ||
+				null
+			);
 		}
 
 		return data || null;
 	} catch (error) {
 		console.error("Failed to fetch from Supabase:", error);
-		return behobenPieces.find((piece) => piece.piece_number === pieceNumber) || null;
+		return (
+			behobenPieces.find((piece) => piece.piece_number === pieceNumber) || null
+		);
 	}
 }

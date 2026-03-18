@@ -1,15 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/lib/supabase-server";
+import { type NextRequest, NextResponse } from "next/server";
 import {
-	getHomepageSections,
-	updateHomepageSection,
-	toggleSectionVisibility,
-	getHomepageItems,
 	createHomepageItem,
-	updateHomepageItem,
 	deleteHomepageItem,
+	getHomepageItems,
+	getHomepageSections,
 	reorderHomepageItems,
+	toggleSectionVisibility,
+	updateHomepageItem,
+	updateHomepageSection,
 } from "@/lib/admin/homepage";
+import { getUser } from "@/lib/supabase-server";
 
 export async function GET(request: NextRequest) {
 	const user = await getUser();

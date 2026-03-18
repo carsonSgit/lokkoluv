@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { getImageUrl } from "@/lib/behoben-data";
-import type { BehobenPiece, SiteSettings } from "@/lib/types";
-import { defaultSettings } from "@/lib/fallbacks/settings";
 import BehobenFooter from "@/app/components/BehobenFooter";
 import Navbar from "@/app/components/Navbar";
+import { getImageUrl } from "@/lib/behoben-data";
+import { defaultSettings } from "@/lib/fallbacks/settings";
+import type { BehobenPiece, SiteSettings } from "@/lib/types";
 
 interface PieceDetailsProps {
 	piece: BehobenPiece;

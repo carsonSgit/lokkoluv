@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import type { HomepageSection, HomepageItem } from "@/lib/types";
+import { useCallback, useEffect, useState } from "react";
+import type { HomepageItem, HomepageSection } from "@/lib/types";
 
 export default function HomepagePage() {
 	const [sections, setSections] = useState<HomepageSection[]>([]);

@@ -1,9 +1,9 @@
-import { supabaseAdmin } from "@/lib/supabase-admin";
-import type { HomepageSection, HomepageItem } from "@/lib/types";
 import {
-	defaultHomepageSections,
 	defaultHomepageItems,
+	defaultHomepageSections,
 } from "@/lib/fallbacks/homepage";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+import type { HomepageItem, HomepageSection } from "@/lib/types";
 
 // Sections
 export async function getHomepageSections(): Promise<HomepageSection[]> {

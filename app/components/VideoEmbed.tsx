@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
 
 type VideoEmbedProps = {
 	youtubeId: string;
@@ -54,10 +54,7 @@ export default function VideoEmbed({
 									className="ml-2 text-black"
 									aria-hidden="true"
 								>
-									<path
-										d="M6 4L20 12L6 20V4Z"
-										fill="currentColor"
-									/>
+									<path d="M6 4L20 12L6 20V4Z" fill="currentColor" />
 								</svg>
 							</div>
 						</div>

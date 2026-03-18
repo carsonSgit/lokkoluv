@@ -1,9 +1,9 @@
 import Image from "next/image";
+import { getHomepageData } from "@/lib/public-data";
 import PageHeader from "./components/PageHeader";
 import SocialLinks from "./components/SocialLinks";
+import VideoCarousel from "./components/VideoCarousel";
 import Eyeball3D from "./threejs/Eyeball3D";
-import VideoGrid from "./components/VideoGrid";
-import { getHomepageData } from "@/lib/public-data";
 
 // Static video list
 const featuredVideos = [
@@ -19,8 +19,8 @@ export default async function Home() {
 	const { sectionVisibility, workItems, clothingItems, content, settings } =
 		await getHomepageData();
 
-	const bannerText = content.banner_text || "WE ARE ALL SINNERS";
-	const comingSoonText = content.coming_soon_text || "7 SINS COMING SOON";
+	const bannerText = content.banner_text || "BEHOBEN";
+	const comingSoonText = content.coming_soon_text || "EXPLORE BEHOBEN";
 
 	return (
 		<main className="w-full">
@@ -34,9 +34,7 @@ export default async function Home() {
 							{workItems.map((item, index) => (
 								<div key={item.id} className="space-y-4">
 									<Image
-										src={
-											item.image_url || `/images/${item.image_filename}`
-										}
+										src={item.image_url || `/images/${item.image_filename}`}
 										alt={item.title || `Work ${index + 1}`}
 										width={200}
 										height={200}
@@ -59,7 +57,10 @@ export default async function Home() {
 			{/* Video Section */}
 			<div className="container max-w-[90%] mx-auto px-4 py-16">
 				<section>
-					<VideoGrid videos={featuredVideos} />
+					<h2 className="font-bold text-[clamp(2rem,4vw,5rem)] mb-10 md:mb-16 tracking-tight text-center md:text-left text-black uppercase">
+						Featured Works
+					</h2>
+					<VideoCarousel videos={featuredVideos} />
 				</section>
 			</div>
 
@@ -93,9 +94,7 @@ export default async function Home() {
 							{clothingItems.map((item, index) => (
 								<Image
 									key={item.id}
-									src={
-										item.image_url || `/images/${item.image_filename}`
-									}
+									src={item.image_url || `/images/${item.image_filename}`}
 									alt={item.title || `Clothes ${index + 1}`}
 									width={300}
 									height={400}

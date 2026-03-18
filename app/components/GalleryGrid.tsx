@@ -10,9 +10,7 @@ interface GalleryGridProps {
 	pieces: BehobenPiece[];
 }
 
-export default function GalleryGrid({
-	pieces,
-}: GalleryGridProps) {
+export default function GalleryGrid({ pieces }: GalleryGridProps) {
 	const preloadedImagesRef = useRef<Set<string>>(new Set());
 
 	const handleMouseEnter = useCallback((piece: BehobenPiece) => {

@@ -1,4 +1,4 @@
-import type { HomepageSection, HomepageItem } from "@/lib/types";
+import type { HomepageItem, HomepageSection } from "@/lib/types";
 
 export const defaultHomepageSections: HomepageSection[] = [
 	{

@@ -10,7 +10,10 @@ interface BehobenGalleryProps {
 	settings: SiteSettings;
 }
 
-export default function BehobenGallery({ pieces, settings }: BehobenGalleryProps) {
+export default function BehobenGallery({
+	pieces,
+	settings,
+}: BehobenGalleryProps) {
 	return (
 		<main className="w-full min-h-screen">
 			<PageHeader subtitle="BEHOBEN" />

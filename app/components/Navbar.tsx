@@ -179,7 +179,9 @@ export default function Navbar() {
 						{/* WORKS submenu */}
 						<div
 							className={`overflow-hidden transition-all duration-200 w-full flex flex-col items-end ${
-								worksExpanded ? "max-h-20 opacity-100 mb-2" : "max-h-0 opacity-0 mb-0"
+								worksExpanded
+									? "max-h-20 opacity-100 mb-2"
+									: "max-h-0 opacity-0 mb-0"
 							}`}
 						>
 							<Link

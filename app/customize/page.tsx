@@ -1,12 +1,15 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import { useCustomization } from "@/lib/context/CustomizationContext";
 
 export default function CustomizePage() {
 	const { config, updateConfig, resetConfig } = useCustomization();
 
-	const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>, key: keyof typeof config) => {
+	const handleColorChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		key: keyof typeof config,
+	) => {
 		updateConfig({ [key]: e.target.value });
 	};
 
@@ -19,7 +22,10 @@ export default function CustomizePage() {
 
 				<div className="space-y-6">
 					<div className="flex flex-col space-y-2">
-						<label htmlFor="primaryColor" className="text-sm font-semibold tracking-wider text-gray-700">
+						<label
+							htmlFor="primaryColor"
+							className="text-sm font-semibold tracking-wider text-gray-700"
+						>
 							PRIMARY COLOR
 						</label>
 						<div className="flex items-center gap-4">
@@ -30,12 +36,17 @@ export default function CustomizePage() {
 								onChange={(e) => handleColorChange(e, "primaryColor")}
 								className="w-12 h-12 p-1 bg-white border border-gray-300 cursor-pointer"
 							/>
-							<span className="font-mono text-sm text-gray-600">{config.primaryColor}</span>
+							<span className="font-mono text-sm text-gray-600">
+								{config.primaryColor}
+							</span>
 						</div>
 					</div>
 
 					<div className="flex flex-col space-y-2">
-						<label htmlFor="backgroundColor" className="text-sm font-semibold tracking-wider text-gray-700">
+						<label
+							htmlFor="backgroundColor"
+							className="text-sm font-semibold tracking-wider text-gray-700"
+						>
 							BACKGROUND COLOR
 						</label>
 						<div className="flex items-center gap-4">
@@ -46,12 +57,17 @@ export default function CustomizePage() {
 								onChange={(e) => handleColorChange(e, "backgroundColor")}
 								className="w-12 h-12 p-1 bg-white border border-gray-300 cursor-pointer"
 							/>
-							<span className="font-mono text-sm text-gray-600">{config.backgroundColor}</span>
+							<span className="font-mono text-sm text-gray-600">
+								{config.backgroundColor}
+							</span>
 						</div>
 					</div>
 
 					<div className="flex flex-col space-y-2">
-						<label htmlFor="textColor" className="text-sm font-semibold tracking-wider text-gray-700">
+						<label
+							htmlFor="textColor"
+							className="text-sm font-semibold tracking-wider text-gray-700"
+						>
 							TEXT COLOR
 						</label>
 						<div className="flex items-center gap-4">
@@ -62,7 +78,9 @@ export default function CustomizePage() {
 								onChange={(e) => handleColorChange(e, "textColor")}
 								className="w-12 h-12 p-1 bg-white border border-gray-300 cursor-pointer"
 							/>
-							<span className="font-mono text-sm text-gray-600">{config.textColor}</span>
+							<span className="font-mono text-sm text-gray-600">
+								{config.textColor}
+							</span>
 						</div>
 					</div>
 

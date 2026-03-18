@@ -1,6 +1,6 @@
+import { behobenPieces } from "@/lib/behoben-data";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { BehobenPieceAdmin } from "@/lib/types";
-import { behobenPieces } from "@/lib/behoben-data";
 
 export async function getGalleryPieces(): Promise<BehobenPieceAdmin[]> {
 	try {

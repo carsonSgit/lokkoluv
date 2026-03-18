@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
 import Image from "next/image";
+import { useRef, useState } from "react";
 
 interface ImageUploaderProps {
 	onUploadComplete: (url: string, filename?: string) => void;
@@ -77,7 +77,9 @@ export default function ImageUploader({
 			const dt = new DataTransfer();
 			dt.items.add(file);
 			fileInputRef.current.files = dt.files;
-			fileInputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+			fileInputRef.current.dispatchEvent(
+				new Event("change", { bubbles: true }),
+			);
 		}
 	};
 
@@ -85,15 +87,15 @@ export default function ImageUploader({
 
 	return (
 		<div>
-			<label className="block text-sm font-medium text-black mb-2">
-				Image
-			</label>
+			<label className="block text-sm font-medium text-black mb-2">Image</label>
 
 			<div
 				onDrop={handleDrop}
 				onDragOver={(e) => e.preventDefault()}
 				className={`relative border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-					uploading ? "border-gray-300 bg-gray-50" : "border-gray-300 hover:border-black"
+					uploading
+						? "border-gray-300 bg-gray-50"
+						: "border-gray-300 hover:border-black"
 				}`}
 			>
 				{displayImage ? (
