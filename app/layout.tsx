@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import BehobenPreloader from "./components/BehobenPreloader";
 import Navbar from "./components/Navbar";
 import { ThemeProvider } from "@/lib/context/ThemeContext";
+import { CustomizationProvider } from "@/lib/context/CustomizationContext";
 import { getPublicTheme } from "@/lib/public-data";
 
 const tenorSans = Tenor_Sans({
@@ -39,11 +40,13 @@ export default async function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${workSans.variable} ${tenorSans.variable} ${workSans.className} antialiased`}>
-				<ThemeProvider initialTheme={theme}>
-					<BehobenPreloader />
-					<Navbar />
-					{children}
-				</ThemeProvider>
+				<CustomizationProvider>
+					<ThemeProvider initialTheme={theme}>
+						<BehobenPreloader />
+						<Navbar />
+						{children}
+					</ThemeProvider>
+				</CustomizationProvider>
 				<Analytics />
 			</body>
 		</html>
