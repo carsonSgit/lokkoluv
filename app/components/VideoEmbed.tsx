@@ -15,22 +15,20 @@ export default function VideoEmbed({
 	showTitle = false,
 }: VideoEmbedProps) {
 	const [isPlaying, setIsPlaying] = useState(false);
-
-	// High quality thumbnail URL from YouTube
-	const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+	const thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
 
 	return (
-		<div className="w-full flex flex-col gap-4">
+		<div className="flex w-full flex-col gap-4">
 			{showTitle && title && (
-				<h3 className="font-medium text-[clamp(1.25rem,2vw,1.5rem)] text-black">
+				<h3 className="text-[clamp(1.25rem,2vw,1.5rem)] font-medium text-black">
 					{title}
 				</h3>
 			)}
-			<div className="relative w-full aspect-video bg-black/5 overflow-hidden group">
+			<div className="relative aspect-video w-full overflow-hidden bg-black/5">
 				{!isPlaying ? (
 					<button
 						type="button"
-						className="absolute inset-0 w-full h-full cursor-pointer focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2 flex items-center justify-center"
+						className="absolute inset-0 flex h-full w-full cursor-pointer items-end justify-start p-5 text-left focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2"
 						onClick={() => setIsPlaying(true)}
 						aria-label={`Play video ${title}`}
 					>
@@ -38,32 +36,30 @@ export default function VideoEmbed({
 							src={thumbnailUrl}
 							alt={title}
 							fill
-							sizes="(max-width: 768px) 100vw, 80vw"
-							className="object-cover transition-transform duration-500 group-hover:scale-105"
+							sizes="(max-width: 768px) 100vw, 50vw"
+							className="object-cover"
 							loading="lazy"
 						/>
-						{/* Play Button Overlay */}
-						<div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors duration-300">
-							<div className="w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
-								<svg
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									className="ml-2 text-black"
-									aria-hidden="true"
-								>
-									<path d="M6 4L20 12L6 20V4Z" fill="currentColor" />
-								</svg>
-							</div>
-						</div>
+						<div className="absolute inset-0 bg-black/20" />
+						<span className="relative inline-flex items-center gap-3 border border-white bg-black/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white">
+							<svg
+								width="14"
+								height="14"
+								viewBox="0 0 24 24"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+								aria-hidden="true"
+							>
+								<path d="M6 4L20 12L6 20V4Z" fill="currentColor" />
+							</svg>
+							Play film
+						</span>
 					</button>
 				) : (
 					<iframe
-						src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+						src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&modestbranding=1&playsinline=1&rel=0`}
 						title={title}
-						className="absolute inset-0 w-full h-full"
+						className="absolute inset-0 h-full w-full"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 						allowFullScreen
 					/>

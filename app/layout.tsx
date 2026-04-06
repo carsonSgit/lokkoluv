@@ -9,7 +9,11 @@ import { cn } from "@/lib/utils";
 import BehobenPreloader from "./components/BehobenPreloader";
 import Navbar from "./components/Navbar";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const geist = Geist({
+	subsets: ["latin"],
+	variable: "--font-sans",
+	adjustFontFallback: false,
+});
 
 const tenorSans = Tenor_Sans({
 	weight: "400",
