@@ -1,10 +1,10 @@
-import type { HomepageSection, HomepageItem } from "@/lib/types";
+import type { HomepageItem, HomepageSection } from "@/lib/types";
 
 export const defaultHomepageSections: HomepageSection[] = [
 	{
 		id: "works",
 		section_key: "works",
-		section_name: "Work Previews",
+		section_name: "Current Works",
 		is_visible: true,
 		display_order: 1,
 	},
@@ -35,8 +35,8 @@ export const defaultHomepageItems: HomepageItem[] = [
 	{
 		id: "work-1",
 		item_type: "work",
-		title: "Title",
-		image_filename: "work1.webp",
+		title: "BEHOBEN I",
+		image_filename: "behoben/behoben_1.webp",
 		image_url: null,
 		display_order: 1,
 		is_visible: true,
@@ -44,8 +44,8 @@ export const defaultHomepageItems: HomepageItem[] = [
 	{
 		id: "work-2",
 		item_type: "work",
-		title: "Title",
-		image_filename: "work2.webp",
+		title: "BEHOBEN II",
+		image_filename: "behoben/behoben_2.webp",
 		image_url: null,
 		display_order: 2,
 		is_visible: true,
@@ -53,8 +53,8 @@ export const defaultHomepageItems: HomepageItem[] = [
 	{
 		id: "work-3",
 		item_type: "work",
-		title: "Title",
-		image_filename: "work3.webp",
+		title: "BEHOBEN III",
+		image_filename: "behoben/behoben_3.webp",
 		image_url: null,
 		display_order: 3,
 		is_visible: true,
@@ -62,8 +62,8 @@ export const defaultHomepageItems: HomepageItem[] = [
 	{
 		id: "work-4",
 		item_type: "work",
-		title: "Title",
-		image_filename: "work4.webp",
+		title: "BEHOBEN IV",
+		image_filename: "behoben/behoben_4.webp",
 		image_url: null,
 		display_order: 4,
 		is_visible: true,

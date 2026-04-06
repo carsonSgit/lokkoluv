@@ -1,6 +1,6 @@
 import { getUser } from "@/lib/supabase-server";
-import AdminSidebar from "./components/AdminSidebar";
 import AdminHeader from "./components/AdminHeader";
+import AdminSidebar from "./components/AdminSidebar";
 
 export default async function AdminLayout({
 	children,

@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
 	const pathname = request.nextUrl.pathname;
@@ -39,7 +39,9 @@ export async function middleware(request: NextRequest) {
 	const isAuthenticated = !error && !!user;
 
 	// Debug logging - remove after fixing
-	console.log(`[middleware] ${pathname} | auth=${isAuthenticated} | user=${!!user} | error=${error?.message || "none"}`);
+	console.log(
+		`[middleware] ${pathname} | auth=${isAuthenticated} | user=${!!user} | error=${error?.message || "none"}`,
+	);
 
 	// Login page: only redirect if truly authenticated
 	if (pathname === "/admin/login") {

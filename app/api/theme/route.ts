@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
 import { defaultTheme } from "@/lib/fallbacks/theme";
+import { supabase } from "@/lib/supabase";
 
 export async function GET() {
 	// Public route - no auth required

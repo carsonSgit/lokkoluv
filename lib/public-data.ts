@@ -1,15 +1,21 @@
+import {
+	defaultContentBlocks,
+	getDefaultContentBlock,
+} from "./fallbacks/content";
+import {
+	defaultHomepageItems,
+	defaultHomepageSections,
+} from "./fallbacks/homepage";
+import { defaultSettings } from "./fallbacks/settings";
+import { defaultTheme } from "./fallbacks/theme";
 import { supabase } from "./supabase";
 import type {
 	ContentBlock,
-	HomepageSection,
 	HomepageItem,
+	HomepageSection,
 	SiteSettings,
 	ThemeSettings,
 } from "./types";
-import { defaultContentBlocks, getDefaultContentBlock } from "./fallbacks/content";
-import { defaultHomepageSections, defaultHomepageItems } from "./fallbacks/homepage";
-import { defaultSettings } from "./fallbacks/settings";
-import { defaultTheme } from "./fallbacks/theme";
 
 // ============================================
 // Content Blocks (about, banner, etc.)

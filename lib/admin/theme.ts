@@ -1,6 +1,6 @@
+import { defaultFonts, defaultTheme } from "@/lib/fallbacks/theme";
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import type { ThemeSettings, AvailableFont } from "@/lib/types";
-import { defaultTheme, defaultFonts } from "@/lib/fallbacks/theme";
+import type { AvailableFont, ThemeSettings } from "@/lib/types";
 
 export async function getThemeSettings(): Promise<ThemeSettings> {
 	try {

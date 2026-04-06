@@ -1,6 +1,9 @@
 import BehobenFooter from "@/app/components/BehobenFooter";
 import PageHeader from "@/app/components/PageHeader";
-import { getPublicContentBlocks, getPublicSiteSettings } from "@/lib/public-data";
+import {
+	getPublicContentBlocks,
+	getPublicSiteSettings,
+} from "@/lib/public-data";
 
 export default async function AboutPage() {
 	const [contentBlocks, settings] = await Promise.all([

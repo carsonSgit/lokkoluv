@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ContentBlock } from "@/lib/types";
 
 export default function ContentPage() {
@@ -80,9 +80,7 @@ export default function ContentPage() {
 		<div className="space-y-6">
 			<div>
 				<h1 className="text-3xl font-bold text-black">Content Editor</h1>
-				<p className="text-gray-600 mt-1">
-					Edit text content across your site
-				</p>
+				<p className="text-gray-600 mt-1">Edit text content across your site</p>
 			</div>
 
 			<div className="space-y-4">
@@ -96,9 +94,7 @@ export default function ContentPage() {
 								<h3 className="font-semibold text-black">
 									{blockLabels[block.block_key] || block.block_key}
 								</h3>
-								<p className="text-sm text-gray-500">
-									Key: {block.block_key}
-								</p>
+								<p className="text-sm text-gray-500">Key: {block.block_key}</p>
 							</div>
 							<div className="flex items-center gap-3">
 								<label className="flex items-center gap-2 text-sm">
@@ -106,7 +102,10 @@ export default function ContentPage() {
 										type="checkbox"
 										checked={block.is_visible}
 										onChange={async (e) => {
-											const updated = { ...block, is_visible: e.target.checked };
+											const updated = {
+												...block,
+												is_visible: e.target.checked,
+											};
 											setBlocks((prev) =>
 												prev.map((b) => (b.id === block.id ? updated : b)),
 											);
@@ -124,7 +123,10 @@ export default function ContentPage() {
 								<textarea
 									value={editingBlock.content}
 									onChange={(e) =>
-										setEditingBlock({ ...editingBlock, content: e.target.value })
+										setEditingBlock({
+											...editingBlock,
+											content: e.target.value,
+										})
 									}
 									rows={5}
 									className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none resize-y"

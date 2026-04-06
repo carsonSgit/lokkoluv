@@ -1,0 +1,20 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(test:*)",
+			"Bash(pnpm lint:*)",
+			"Bash(pnpm lint:fix:*)",
+			"Bash(pnpm build:*)",
+			"Bash(npm run build:*)",
+			"mcp__plugin_serena_serena__initial_instructions",
+			"mcp__plugin_serena_serena__check_onboarding_performed",
+			"mcp__plugin_serena_serena__activate_project",
+			"mcp__plugin_serena_serena__list_dir",
+			"mcp__plugin_serena_serena__think_about_collected_information",
+			"mcp__plugin_serena_serena__read_file",
+			"Bash(pnpm add:*)",
+			"mcp__plugin_serena_serena__create_text_file",
+			"mcp__plugin_serena_serena__replace_content"
+		]
+	}
+}

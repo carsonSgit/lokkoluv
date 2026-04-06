@@ -202,3 +202,38 @@ export function getImageUrl(piece: BehobenPiece): string {
 	// Fall back to local image
 	return getLocalImageUrl(piece.image_filename);
 }
+
+// Fetch a single behoben piece by piece_number
+export async function fetchBehobenPieceByNumber(
+	pieceNumber: number,
+): Promise<BehobenPiece | null> {
+	// Return local data if Supabase is not configured
+	if (!supabase) {
+		return (
+			behobenPieces.find((piece) => piece.piece_number === pieceNumber) || null
+		);
+	}
+
+	try {
+		const { data, error } = await supabase
+			.from("behoben_pieces")
+			.select("*")
+			.eq("piece_number", pieceNumber)
+			.single();
+
+		if (error) {
+			console.error("Supabase fetch error:", error);
+			return (
+				behobenPieces.find((piece) => piece.piece_number === pieceNumber) ||
+				null
+			);
+		}
+
+		return data || null;
+	} catch (error) {
+		console.error("Failed to fetch from Supabase:", error);
+		return (
+			behobenPieces.find((piece) => piece.piece_number === pieceNumber) || null
+		);
+	}
+}

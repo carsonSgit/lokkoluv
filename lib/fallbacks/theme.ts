@@ -1,4 +1,4 @@
-import type { ThemeSettings, AvailableFont } from "@/lib/types";
+import type { AvailableFont, ThemeSettings } from "@/lib/types";
 
 export const defaultTheme: ThemeSettings = {
 	id: "default",

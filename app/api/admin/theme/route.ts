@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/lib/supabase-server";
+import { type NextRequest, NextResponse } from "next/server";
 import {
-	getThemeSettings,
-	updateThemeSettings,
-	publishTheme,
 	getAvailableFonts,
+	getThemeSettings,
+	publishTheme,
+	updateThemeSettings,
 } from "@/lib/admin/theme";
+import { getUser } from "@/lib/supabase-server";
 
 export async function GET(request: NextRequest) {
 	const user = await getUser();

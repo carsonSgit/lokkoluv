@@ -1,8 +1,8 @@
 "use client";
 
+import type { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase-browser";
-import type { User } from "@supabase/supabase-js";
 
 interface AdminHeaderProps {
 	user: User;

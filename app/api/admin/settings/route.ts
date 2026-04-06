@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/lib/supabase-server";
+import { type NextRequest, NextResponse } from "next/server";
 import { getSiteSettings, updateSiteSettings } from "@/lib/admin/settings";
+import { getUser } from "@/lib/supabase-server";
 
 export async function GET() {
 	const user = await getUser();

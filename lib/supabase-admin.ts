@@ -36,9 +36,7 @@ export const supabaseAdmin = new Proxy({} as SupabaseClient, {
 	get(_target, prop) {
 		const client = getClient();
 		if (!client) {
-			throw new Error(
-				"Supabase admin client not available (missing env vars)",
-			);
+			throw new Error("Supabase admin client not available (missing env vars)");
 		}
 		const value = client[prop as keyof SupabaseClient];
 		if (typeof value === "function") {

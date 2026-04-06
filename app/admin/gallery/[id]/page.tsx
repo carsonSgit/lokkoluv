@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import type { BehobenPieceAdmin } from "@/lib/types";
+import { useParams, useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { getImageUrl } from "@/lib/behoben-data";
+import type { BehobenPieceAdmin } from "@/lib/types";
 import ImageUploader from "../../components/ImageUploader";
 
 export default function EditPiecePage() {
@@ -186,7 +186,9 @@ export default function EditPiecePage() {
 						id="size"
 						type="text"
 						value={piece.size || ""}
-						onChange={(e) => setPiece({ ...piece, size: e.target.value || null })}
+						onChange={(e) =>
+							setPiece({ ...piece, size: e.target.value || null })
+						}
 						className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
 						placeholder='e.g., 24" x 36"'
 					/>
@@ -258,7 +260,9 @@ export default function EditPiecePage() {
 						id="visible"
 						type="checkbox"
 						checked={piece.is_visible !== false}
-						onChange={(e) => setPiece({ ...piece, is_visible: e.target.checked })}
+						onChange={(e) =>
+							setPiece({ ...piece, is_visible: e.target.checked })
+						}
 						className="w-5 h-5 border-gray-300 rounded"
 					/>
 					<label htmlFor="visible" className="text-sm font-medium text-black">

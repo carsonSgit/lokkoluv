@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/lib/supabase-server";
+import { type NextRequest, NextResponse } from "next/server";
 import {
-	getContentBlocks,
 	getContentBlock,
+	getContentBlocks,
 	updateContentBlock,
 	upsertContentBlock,
 } from "@/lib/admin/content";
+import { getUser } from "@/lib/supabase-server";
 
 export async function GET(request: NextRequest) {
 	const user = await getUser();

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import type { ThemeSettings, AvailableFont } from "@/lib/types";
+import { useCallback, useEffect, useState } from "react";
+import type { AvailableFont, ThemeSettings } from "@/lib/types";
 
 export default function ThemePage() {
 	const [theme, setTheme] = useState<ThemeSettings | null>(null);

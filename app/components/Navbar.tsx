@@ -56,7 +56,7 @@ export default function Navbar() {
 	return (
 		<nav ref={navRef} className="absolute top-0 left-0 right-0 z-50">
 			<div className="max-w-[90%] mx-auto px-4 pt-6 md:pt-[1.75rem]">
-				<div className="flex justify-between items-start">
+				<div className="flex justify-between items-center">
 					{/* HOME link - only shown on subpages, desktop only */}
 					{!isHomePage ? (
 						<Link
@@ -66,7 +66,7 @@ export default function Navbar() {
 							HOME
 						</Link>
 					) : (
-						<div />
+						<div className="hidden md:block" />
 					)}
 
 					{/* Desktop Navigation */}
@@ -80,7 +80,7 @@ export default function Navbar() {
 						>
 							<button
 								type="button"
-								className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors"
+								className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors h-[44px] flex items-center"
 							>
 								WORKS
 							</button>
@@ -96,7 +96,7 @@ export default function Navbar() {
 							>
 								<Link
 									href="/works/behoben"
-									className="block px-6 py-3 text-black text-sm tracking-[0.2em] font-bold hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white focus-visible:outline-none transition-colors whitespace-nowrap cursor-pointer"
+									className="block px-6 py-3 text-black text-sm tracking-[0.2em] font-bold hover:bg-black hover:text-white focus-visible:bg-black focus-visible:text-white focus-visible:outline-none transition-colors whitespace-nowrap cursor-pointer min-h-[44px] flex items-center"
 								>
 									BEHOBEN
 								</Link>
@@ -105,7 +105,7 @@ export default function Navbar() {
 
 						<Link
 							href="/about"
-							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors"
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors h-[44px] flex items-center"
 						>
 							ABOUT
 						</Link>
@@ -115,13 +115,13 @@ export default function Navbar() {
 					<button
 						type="button"
 						onClick={() => setIsOpen(!isOpen)}
-						className="md:hidden ml-auto flex flex-col justify-center items-center w-11 h-11 gap-1.5 group cursor-pointer focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2"
+						className="md:hidden ml-auto flex flex-col justify-center items-center w-12 h-12 gap-1.5 group cursor-pointer focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-2 -mr-2"
 						aria-label="Toggle menu"
 						aria-expanded={isOpen}
 					>
 						<span
 							className={`block w-6 h-[1.5px] bg-black transition-all duration-300 ease-out ${
-								isOpen ? "rotate-45 translate-y-[7px]" : ""
+								isOpen ? "rotate-45 translate-y-[7.5px]" : ""
 							}`}
 						/>
 						<span
@@ -131,7 +131,7 @@ export default function Navbar() {
 						/>
 						<span
 							className={`block w-6 h-[1.5px] bg-black transition-all duration-300 ease-out ${
-								isOpen ? "-rotate-45 -translate-y-[7px]" : ""
+								isOpen ? "-rotate-45 -translate-y-[7.5px]" : ""
 							}`}
 						/>
 					</button>
@@ -140,15 +140,15 @@ export default function Navbar() {
 				{/* Mobile Dropdown */}
 				<div
 					className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
-						isOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"
+						isOpen ? "max-h-60 opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"
 					}`}
 				>
-					<div className="flex flex-col items-end gap-4 pt-8 pb-4 bg-white">
+					<div className="flex flex-col items-end gap-2 py-4 bg-white/95 backdrop-blur-sm">
 						{/* WORKS with expandable submenu */}
 						<button
 							type="button"
 							onClick={() => setWorksExpanded(!worksExpanded)}
-							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none flex items-center gap-2 cursor-pointer transition-colors min-h-[44px]"
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none flex justify-end items-center gap-2 cursor-pointer transition-colors min-h-[48px] w-full pr-2"
 							aria-expanded={worksExpanded}
 						>
 							WORKS
@@ -178,8 +178,10 @@ export default function Navbar() {
 
 						{/* WORKS submenu */}
 						<div
-							className={`overflow-hidden transition-all duration-200 ${
-								worksExpanded ? "max-h-20 opacity-100" : "max-h-0 opacity-0"
+							className={`overflow-hidden transition-all duration-200 w-full flex flex-col items-end ${
+								worksExpanded
+									? "max-h-20 opacity-100 mb-2"
+									: "max-h-0 opacity-0 mb-0"
 							}`}
 						>
 							<Link
@@ -188,7 +190,7 @@ export default function Navbar() {
 									setIsOpen(false);
 									setWorksExpanded(false);
 								}}
-								className="block text-black text-sm tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none pr-6 cursor-pointer transition-colors min-h-[44px] flex items-center"
+								className="text-black text-sm tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[44px] flex items-center pr-6"
 							>
 								BEHOBEN
 							</Link>
@@ -197,7 +199,7 @@ export default function Navbar() {
 						<Link
 							href="/about"
 							onClick={() => setIsOpen(false)}
-							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[44px] flex items-center"
+							className="text-black text-md tracking-[0.2em] font-bold hover:underline underline-offset-4 focus-visible:underline focus-visible:outline-none cursor-pointer transition-colors min-h-[48px] flex items-center w-full justify-end pr-2"
 						>
 							ABOUT
 						</Link>
