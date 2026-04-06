@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { fetchBehobenPieces, getImageUrl } from "@/lib/behoben-data";
 import { getHomepageData } from "@/lib/public-data";
+import LandingDitheringOverlay from "./components/LandingDitheringOverlay";
 import PageHeader from "./components/PageHeader";
 import SocialLinks from "./components/SocialLinks";
 import VideoCarousel from "./components/VideoCarousel";
@@ -26,9 +28,14 @@ const featuredVideoSeeds = [
 
 type FeaturedVideo = (typeof featuredVideoSeeds)[number];
 
-function getYouTubeThumbnail(youtubeId: string) {
-	return `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
-}
+const behobenHeroImageDimensions: Record<
+	number,
+	{ width: number; height: number }
+> = {
+	1: { width: 1920, height: 1898 },
+	2: { width: 1920, height: 1939 },
+	3: { width: 1920, height: 2370 },
+};
 
 async function getFeaturedVideos(): Promise<FeaturedVideo[]> {
 	return Promise.all(
@@ -64,28 +71,40 @@ export default async function Home() {
 	const [
 		{ sectionVisibility, clothingItems, content, settings },
 		featuredVideos,
-	] = await Promise.all([getHomepageData(), getFeaturedVideos()]);
+		behobenPieces,
+	] = await Promise.all([
+		getHomepageData(),
+		getFeaturedVideos(),
+		fetchBehobenPieces(),
+	]);
 
 	const comingSoonText = content.coming_soon_text || "EXPLORE BEHOBEN";
-	const heroVideos = featuredVideos.slice(0, 3);
+	const heroBehobenPieces = behobenPieces.slice(0, 3);
 
 	return (
 		<main className="w-full">
 			<PageHeader />
 
 			{sectionVisibility.works !== false && (
-				<div className="w-full bg-black text-white">
-					<div className="container mx-auto mt-8 max-w-[90%] px-4 py-32 md:py-18">
+				<div className="relative w-full overflow-hidden bg-black text-white">
+					<div
+						aria-hidden="true"
+						className="pointer-events-none absolute inset-0 z-0"
+					>
+						<LandingDitheringOverlay />
+					</div>
+
+					<div className="relative z-10 container mx-auto mt-8 max-w-[90%] px-4 py-32 md:py-18">
 						<section className="relative overflow-hidden">
 							<div
 								aria-hidden="true"
-								className="pointer-events-none absolute -left-4 top-2 text-[clamp(5rem,16vw,15rem)] font-bold uppercase leading-none tracking-[-0.08em] text-white/[0.06]"
+								className="pointer-events-none absolute top-2 text-[clamp(5rem,16vw,15rem)] font-bold uppercase leading-none tracking-[-0.08em] text-white/[0.06]"
 							>
 								BEHOBEN
 							</div>
 
-							<div className="relative grid gap-10 pt-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(340px,1.1fr)] lg:items-end">
-								<div className="max-w-2xl space-y-8">
+							<div className="relative min-h-[32rem] pt-10 sm:min-h-[36rem] lg:min-h-[29rem]">
+								<div className="relative z-20 max-w-2xl space-y-8">
 									<div className="space-y-3">
 										<h3 className="font-bold text-[clamp(3.5rem,10vw,9rem)] leading-[0.88] tracking-[-0.06em] uppercase z-999">
 											Behoben
@@ -107,41 +126,36 @@ export default async function Home() {
 									</Link>
 								</div>
 
-								{heroVideos.length > 0 && (
-									<div className="relative min-h-[22rem] sm:min-h-[30rem]">
-										<div className="absolute top-[8%] h-[78%] w-[68%] overflow-hidden sm:-left-6">
-											<Image
-												src={getYouTubeThumbnail(heroVideos[0].youtubeId)}
-												alt={heroVideos[0].title}
-												fill
-												priority
-												sizes="(max-width: 1024px) 88vw, 34vw"
-												className="object-cover opacity-90"
-											/>
-										</div>
+								{heroBehobenPieces.length >= 3 && (
+									<div className="pointer-events-none absolute inset-0 z-10">
+										{heroBehobenPieces.map((piece, index) => {
+											const dimensions = behobenHeroImageDimensions[
+												piece.piece_number
+											] ?? {
+												width: 1920,
+												height: 1920,
+											};
 
-										<div className="absolute right-0 top-0 h-[42%] w-[44%] overflow-hidden">
-											<Image
-												src={getYouTubeThumbnail(heroVideos[1].youtubeId)}
-												alt={heroVideos[1].title}
-												fill
-												sizes="(max-width: 1024px) 50vw, 18vw"
-												className="object-cover opacity-90"
-											/>
-										</div>
+											const layoutClasses = [
+												"absolute left-[12%] top-[40%] z-10 w-[48%] sm:left-[26%] sm:top-[30%] sm:w-[32%] lg:left-[56%] lg:top-[8%] lg:w-[18%]",
+												"absolute right-[16%] top-[18%] z-30 w-[36%] sm:right-[27%] sm:top-[13%] sm:w-[23%] lg:right-[8%] lg:top-0 lg:w-[16%]",
+												"absolute bottom-[10%] right-[26%] z-20 w-[44%] sm:bottom-[12%] sm:right-[32%] sm:w-[29%] lg:bottom-[2%] lg:right-[16%] lg:w-[19%]",
+											];
 
-										<div className="absolute bottom-0 right-[8%] h-[34%] w-[52%] overflow-hidden">
-											<Image
-												src={getYouTubeThumbnail(heroVideos[2].youtubeId)}
-												alt={heroVideos[2].title}
-												fill
-												sizes="(max-width: 1024px) 58vw, 22vw"
-												className="object-cover opacity-90"
-											/>
-										</div>
-
-										<div className="absolute bottom-3 left-3 max-w-[16rem] bg-black/85 px-3 py-2 sm:bottom-5 sm:left-5">
-										</div>
+											return (
+												<div key={piece.id} className={layoutClasses[index]}>
+													<Image
+														src={getImageUrl(piece)}
+														alt={piece.title}
+														width={dimensions.width}
+														height={dimensions.height}
+														priority={index === 0}
+														sizes="(max-width: 640px) 58vw, (max-width: 1024px) 34vw, 26vw"
+														className="block h-auto w-full border border-white/10 opacity-95 shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
+													/>
+												</div>
+											);
+										})}
 									</div>
 								)}
 							</div>
