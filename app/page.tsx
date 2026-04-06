@@ -78,7 +78,7 @@ export default async function Home() {
 		fetchBehobenPieces(),
 	]);
 
-	const comingSoonText = content.coming_soon_text || "EXPLORE BEHOBEN";
+	const comingSoonText = content.coming_soon_text || "never stop making";
 	const heroBehobenPieces = behobenPieces.slice(0, 3);
 
 	return (

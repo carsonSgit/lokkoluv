@@ -54,7 +54,7 @@ export const defaultContentBlocks: ContentBlock[] = [
 		id: "coming-soon-text",
 		block_key: "coming_soon_text",
 		title: null,
-		content: "EXPLORE BEHOBEN",
+		content: "never stop making",
 		content_type: "text",
 		is_visible: true,
 		updated_at: new Date().toISOString(),
