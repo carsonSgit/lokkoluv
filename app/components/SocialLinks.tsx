@@ -30,7 +30,7 @@ export default function SocialLinks({ settings }: SocialLinksProps) {
 							<path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z" />
 						</svg>
 					</div>
-					<span className="hidden text-3xl tracking-[2.16px] text-black underline-offset-4 group-hover:underline md:inline">
+					<span className="hidden text-sm font-semibold tracking-[0.2em] text-black underline-offset-4 group-hover:underline md:inline">
 						INSTAGRAM
 					</span>
 				</a>
@@ -56,7 +56,7 @@ export default function SocialLinks({ settings }: SocialLinksProps) {
 							<path d="M234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,40,128,40,128,40S70.44,40,36.16,53.12A24,24,0,0,0,21.67,69.52,240,240,0,0,0,16,128a240,240,0,0,0,5.67,58.48,24,24,0,0,0,14.49,16.41C70.44,216,128,216,128,216s57.56,0,91.84-13.11a24,24,0,0,0,14.49-16.41A240,240,0,0,0,240,128,240,240,0,0,0,234.33,69.52Zm-72.51,61.44-48,32A4,4,0,0,1,108,160V96a4,4,0,0,1,6.06-3.44l48,32a4,4,0,0,1,0,6.88Z" />
 						</svg>
 					</div>
-					<span className="hidden text-3xl tracking-[2.16px] text-black underline-offset-4 group-hover:underline md:inline">
+					<span className="hidden text-sm font-semibold tracking-[0.2em] text-black underline-offset-4 group-hover:underline md:inline">
 						YOUTUBE
 					</span>
 				</a>

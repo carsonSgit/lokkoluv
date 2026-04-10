@@ -88,10 +88,9 @@ export default async function Home() {
 
 									<Link
 										href="/works/behoben"
-										className="inline-flex items-center gap-3 px-4 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-paper"
+										className="inline-flex items-center gap-3 px-4 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-paper hover:underline"
 									>
 										View the full Behoben works
-										<span aria-hidden="true">{"->"}</span>
 									</Link>
 								</div>
 
@@ -137,10 +136,10 @@ export default async function Home() {
 				<div className="container mx-auto max-w-[90%] px-4 py-16 md:py-20">
 					<section>
 						<div className="mb-10 max-w-3xl space-y-4 md:mb-12">
-							<h2 className="font-bold text-[clamp(2rem,4vw,5rem)] tracking-tight text-center md:text-left text-ink uppercase">
+							<h2 className="font-bold text-[clamp(1.25rem,2.5vw,2rem)] tracking-tight text-center md:text-left text-ink uppercase">
 								Video works
 							</h2>
-							<p className="max-w-2xl text-base leading-relaxed text-ink/70">
+							<p className="max-w-2xl text-[clamp(0.9375rem,1.5vw,1.0625rem)] leading-relaxed text-ink/70">
 								A quieter run through the work in motion, kept direct and
 								editorial.
 							</p>
@@ -154,7 +153,7 @@ export default async function Home() {
 				<div className="w-full text-ink">
 					<div className="container mx-auto max-w-[90%] px-4 py-14 md:py-18">
 						<section>
-							<h2 className="mb-10 text-center font-bold text-[clamp(2rem,7vw,8rem)] leading-none tracking-tight md:mb-16">
+							<h2 className="mb-10 text-center font-bold text-[clamp(2rem,5vw,5.5rem)] leading-none tracking-tight md:mb-16">
 								{comingSoonText}
 							</h2>
 

@@ -19,8 +19,8 @@ export default function BehobenFooter({
 					</div>
 
 					<div className="space-y-8 md:space-y-12 order-2 md:order-1">
-						<h2 className="font-extrabold text-[clamp(2rem,7vw,6.25rem)] text-black tracking-tight text-center md:text-left">
-							FIND ME AT
+						<h2 className="font-bold text-[clamp(1.25rem,2.5vw,2rem)] text-black tracking-[0.2em] uppercase text-center md:text-left">
+							Find me at
 						</h2>
 
 						<SocialLinks settings={settings} />

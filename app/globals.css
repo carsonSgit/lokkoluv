@@ -38,13 +38,14 @@
 
 :root {
 	--color-primary: #0c0b0a;
-	--color-background: #f5f2ea;
+	--color-background: #e4e4e4;
 	--font-heading: "Tenor Sans", serif;
 	--font-body: "Work Sans", sans-serif;
 	--size-heading-xl: clamp(3rem, 10vw, 9rem);
 }
 
 @layer base {
+
 	h1,
 	h2,
 	h3,
@@ -53,6 +54,7 @@
 	h6 {
 		font-family: var(--font-heading);
 	}
+
 	:root {
 		--background: oklch(1 0 0);
 		--foreground: oklch(0.145 0 0);
@@ -87,6 +89,7 @@
 		--sidebar-border: oklch(0.922 0 0);
 		--sidebar-ring: oklch(0.708 0 0);
 	}
+
 	.dark {
 		--background: oklch(0.145 0 0);
 		--foreground: oklch(0.985 0 0);
@@ -120,21 +123,20 @@
 		--sidebar-border: oklch(1 0 0 / 10%);
 		--sidebar-ring: oklch(0.556 0 0);
 	}
+
 	.theme {
 		--font-sans: var(--font-sans);
 	}
+
 	body {
 		@apply bg-background text-foreground;
 	}
+
 	html {
 		@apply font-sans;
 	}
 }
 
-body {
-	@apply bg-paper;
-	background-color: var(--color-background);
-}
 
 ::-webkit-scrollbar {
 	display: none;
