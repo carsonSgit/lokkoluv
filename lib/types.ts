@@ -26,8 +26,8 @@ export interface SiteSettings {
 	contact_email: string;
 	instagram_url: string | null;
 	instagram_handle: string;
-	tiktok_url: string | null;
-	tiktok_handle: string;
+	youtube_url: string | null;
+	youtube_handle: string;
 	updated_at: string;
 }
 

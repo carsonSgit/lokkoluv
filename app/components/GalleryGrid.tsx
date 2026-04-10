@@ -24,7 +24,7 @@ export default function GalleryGrid({ pieces }: GalleryGridProps) {
 	}, []);
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
+		<div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-4">
 			{pieces.map((piece, index) => (
 				<Link
 					key={piece.id}
@@ -41,8 +41,8 @@ export default function GalleryGrid({ pieces }: GalleryGridProps) {
 						sizes="(max-width: 768px) 90vw, 30vw"
 						className="w-full h-auto object-cover transition-transform duration-300 bg-[#f5f5f5]"
 						style={{ borderRadius: 0 }}
-						priority={index < 6}
-						loading={index < 6 ? "eager" : "lazy"}
+						priority={index < 3}
+						loading={index < 3 ? "eager" : "lazy"}
 					/>
 
 					<div

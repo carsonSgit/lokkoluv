@@ -173,17 +173,17 @@ export default function SettingsPage() {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
 							<label
-								htmlFor="tiktok_handle"
+								htmlFor="youtube_handle"
 								className="block text-sm font-medium text-black mb-2"
 							>
-								TikTok Handle
+								YouTube Handle
 							</label>
 							<input
-								id="tiktok_handle"
+								id="youtube_handle"
 								type="text"
-								value={settings.tiktok_handle}
+								value={settings.youtube_handle}
 								onChange={(e) =>
-									setSettings({ ...settings, tiktok_handle: e.target.value })
+									setSettings({ ...settings, youtube_handle: e.target.value })
 								}
 								className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
 								placeholder="@lokkoluv"
@@ -192,23 +192,23 @@ export default function SettingsPage() {
 
 						<div>
 							<label
-								htmlFor="tiktok_url"
+								htmlFor="youtube_url"
 								className="block text-sm font-medium text-black mb-2"
 							>
-								TikTok URL
+								YouTube URL
 							</label>
 							<input
-								id="tiktok_url"
+								id="youtube_url"
 								type="url"
-								value={settings.tiktok_url || ""}
+								value={settings.youtube_url || ""}
 								onChange={(e) =>
 									setSettings({
 										...settings,
-										tiktok_url: e.target.value || null,
+										youtube_url: e.target.value || null,
 									})
 								}
 								className="w-full px-4 py-3 border border-gray-300 focus:border-black focus:outline-none"
-								placeholder="https://tiktok.com/@lokkoluv"
+								placeholder="https://youtube.com/@LOKKOLUV"
 							/>
 						</div>
 					</div>
