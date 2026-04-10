@@ -1,12 +1,20 @@
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchBehobenPieces, getImageUrl } from "@/lib/behoben-data";
 import { getHomepageData } from "@/lib/public-data";
-import LandingDitheringOverlay from "./components/LandingDitheringOverlay";
+import LazyEyeball3D from "./components/LazyEyeball3D";
 import PageHeader from "./components/PageHeader";
 import SocialLinks from "./components/SocialLinks";
-import VideoCarousel from "./components/VideoCarousel";
-import Eyeball3D from "./threejs/Eyeball3D";
+
+const VideoCarousel = dynamic(() => import("./components/VideoCarousel"), {
+	loading: () => (
+		<div className="grid gap-6 md:grid-cols-2">
+			<div className="aspect-video w-full animate-pulse bg-black/5" />
+			<div className="hidden aspect-video w-full animate-pulse bg-black/5 md:block" />
+		</div>
+	),
+});
 
 const featuredVideoSeeds = [
 	{ id: "v1", youtubeId: "Nqq2EG53-p4", title: "about us2.29- 2024" },
@@ -26,8 +34,6 @@ const featuredVideoSeeds = [
 	{ id: "v6", youtubeId: "L_FGmJh7Eco", title: "TRULY F=KN GRATEFUL" },
 ];
 
-type FeaturedVideo = (typeof featuredVideoSeeds)[number];
-
 const behobenHeroImageDimensions: Record<
 	number,
 	{ width: number; height: number }
@@ -37,46 +43,13 @@ const behobenHeroImageDimensions: Record<
 	3: { width: 1920, height: 2370 },
 };
 
-async function getFeaturedVideos(): Promise<FeaturedVideo[]> {
-	return Promise.all(
-		featuredVideoSeeds.map(async (video) => {
-			try {
-				const videoUrl = encodeURIComponent(
-					`https://www.youtube.com/watch?v=${video.youtubeId}`,
-				);
-				const response = await fetch(
-					`https://www.youtube.com/oembed?url=${videoUrl}&format=json`,
-					{
-						next: { revalidate: 86400 },
-					},
-				);
-
-				if (!response.ok) {
-					return video;
-				}
-
-				const data = (await response.json()) as { title?: string };
-				return {
-					...video,
-					title: data.title?.trim() || video.title,
-				};
-			} catch {
-				return video;
-			}
-		}),
-	);
-}
+export const revalidate = 300;
 
 export default async function Home() {
 	const [
 		{ sectionVisibility, clothingItems, content, settings },
-		featuredVideos,
 		behobenPieces,
-	] = await Promise.all([
-		getHomepageData(),
-		getFeaturedVideos(),
-		fetchBehobenPieces(),
-	]);
+	] = await Promise.all([getHomepageData(), fetchBehobenPieces()]);
 
 	const comingSoonText = content.coming_soon_text || "never stop making";
 	const heroBehobenPieces = behobenPieces.slice(0, 3);
@@ -87,13 +60,6 @@ export default async function Home() {
 
 			{sectionVisibility.works !== false && (
 				<div className="relative w-full overflow-hidden bg-black text-white">
-					<div
-						aria-hidden="true"
-						className="pointer-events-none absolute inset-0 z-0"
-					>
-						<LandingDitheringOverlay />
-					</div>
-
 					<div className="relative z-10 container mx-auto mt-8 max-w-[90%] px-4 py-32 md:py-18">
 						<section className="relative overflow-hidden">
 							<div
@@ -149,7 +115,7 @@ export default async function Home() {
 														alt={piece.title}
 														width={dimensions.width}
 														height={dimensions.height}
-														priority={index === 0}
+														priority={index < 2}
 														sizes="(max-width: 640px) 58vw, (max-width: 1024px) 34vw, 26vw"
 														className="block h-auto w-full border border-white/10 opacity-95 shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
 													/>
@@ -176,7 +142,7 @@ export default async function Home() {
 								editorial.
 							</p>
 						</div>
-						<VideoCarousel videos={featuredVideos} />
+						<VideoCarousel videos={featuredVideoSeeds} />
 					</section>
 				</div>
 			</div>
@@ -215,7 +181,7 @@ export default async function Home() {
 						<section>
 							<div className="flex flex-col items-center justify-between gap-16 md:flex-row md:gap-12">
 								<div className="order-1 self-center md:order-2">
-									<Eyeball3D />
+									<LazyEyeball3D />
 								</div>
 
 								<div className="order-2 space-y-8 md:order-1 md:space-y-12">

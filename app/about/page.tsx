@@ -5,13 +5,14 @@ import {
 	getPublicSiteSettings,
 } from "@/lib/public-data";
 
+export const revalidate = 300;
+
 export default async function AboutPage() {
 	const [contentBlocks, settings] = await Promise.all([
 		getPublicContentBlocks(),
 		getPublicSiteSettings(),
 	]);
 
-	// Build content map for easy lookup
 	const content: Record<string, string> = {};
 	for (const block of contentBlocks) {
 		content[block.block_key] = block.content;
@@ -34,7 +35,6 @@ export default async function AboutPage() {
 		<main className="w-full min-h-screen">
 			<PageHeader subtitle="ABOUT" />
 
-			{/* Story Content */}
 			<div className="container max-w-[90%] mx-auto px-4 py-12">
 				<article className="max-w-3xl mx-auto">
 					<div className="space-y-8 text-[clamp(1rem,2vw,1.25rem)] leading-relaxed text-black">
@@ -50,7 +50,6 @@ export default async function AboutPage() {
 							{conclusion}
 						</p>
 
-						{/* Article Link Button */}
 						<div className="pt-8 flex justify-center">
 							<a
 								href="https://www.ctvnews.ca/montreal/article/mother-pleads-for-stay-of-deportation-to-care-for-ailing-son/"
@@ -65,7 +64,6 @@ export default async function AboutPage() {
 				</article>
 			</div>
 
-			{/* Footer */}
 			<BehobenFooter settings={settings} />
 		</main>
 	);

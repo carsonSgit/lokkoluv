@@ -6,7 +6,6 @@ import { CustomizationProvider } from "@/lib/context/CustomizationContext";
 import { ThemeProvider } from "@/lib/context/ThemeContext";
 import { getPublicTheme } from "@/lib/public-data";
 import { cn } from "@/lib/utils";
-import BehobenPreloader from "./components/BehobenPreloader";
 import Navbar from "./components/Navbar";
 
 const geist = Geist({
@@ -51,7 +50,6 @@ export default async function RootLayout({
 			>
 				<CustomizationProvider>
 					<ThemeProvider initialTheme={theme}>
-						<BehobenPreloader />
 						<Navbar />
 						{children}
 					</ThemeProvider>
