@@ -6,12 +6,13 @@ import { getHomepageData } from "@/lib/public-data";
 import LazyEyeball3D from "./components/LazyEyeball3D";
 import PageHeader from "./components/PageHeader";
 import SocialLinks from "./components/SocialLinks";
+import BehobenFooter from "./components/BehobenFooter";
 
 const VideoCarousel = dynamic(() => import("./components/VideoCarousel"), {
 	loading: () => (
 		<div className="grid gap-6 md:grid-cols-2">
-			<div className="aspect-video w-full animate-pulse bg-black/5" />
-			<div className="hidden aspect-video w-full animate-pulse bg-black/5 md:block" />
+			<div className="aspect-video w-full animate-pulse bg-ink/5" />
+			<div className="hidden aspect-video w-full animate-pulse bg-ink/5 md:block" />
 		</div>
 	),
 });
@@ -59,25 +60,27 @@ export default async function Home() {
 			<PageHeader />
 
 			{sectionVisibility.works !== false && (
-				<div className="relative w-full overflow-hidden bg-black text-white">
-					<div className="relative z-10 container mx-auto mt-8 max-w-[90%] px-4 py-32 md:py-18">
+				<div className="relative w-full overflow-hidden bg-linear-to-b from-transparent to-ink gradient-ease-[cubic-bezier(0.4,0.3,0.5,0.6)] text-white">
+					<div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 h-48 bg-linear-to-t from-white to-transparent gradient-ease-[cubic-bezier(0.5,0.5,0.3,0.89)]" />
+					<div
+						aria-hidden="true"
+						className="pointer-events-none absolute inset-0 opacity-[0.2] mix-blend-screen"
+						style={{
+							backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")`,
+							backgroundSize: "220px 220px",
+						}}
+					/>
+					<div className="relative z-10 container mx-auto mt-8 max-w-[90%] px-4 py-52 md:py-28">
 						<section className="relative overflow-hidden">
-							<div
-								aria-hidden="true"
-								className="pointer-events-none absolute top-2 text-[clamp(5rem,16vw,15rem)] font-bold uppercase leading-none tracking-[-0.08em] text-white/[0.06]"
-							>
-								BEHOBEN
-							</div>
-
-							<div className="relative min-h-[32rem] pt-10 sm:min-h-[36rem] lg:min-h-[29rem]">
-								<div className="relative z-20 max-w-2xl space-y-8">
+							<div className="relative flex items-center min-h-[48rem] sm:min-h-[54rem] lg:min-h-[44rem]">
+								<div className="relative z-20 max-w-2xl space-y-8 text-white/80">
 									<div className="space-y-3">
 										<h3 className="font-bold text-[clamp(3.5rem,10vw,9rem)] leading-[0.88] tracking-[-0.06em] uppercase z-999">
 											Behoben
 										</h3>
 									</div>
 
-									<p className="max-w-xl pl-4 text-[clamp(1rem,1.8vw,1.125rem)] leading-relaxed text-white/72">
+									<p className="max-w-xl pl-4 text-[clamp(1rem,1.8vw,1.125rem)] leading-relaxed text-paper/72">
 										Most recent collection of works. A mixture of various
 										mediums, all tied together by expression and a desire to
 										create.
@@ -85,14 +88,14 @@ export default async function Home() {
 
 									<Link
 										href="/works/behoben"
-										className="inline-flex items-center gap-3 px-4 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-white"
+										className="inline-flex items-center gap-3 px-4 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-paper"
 									>
 										View the full Behoben works
 										<span aria-hidden="true">{"->"}</span>
 									</Link>
 								</div>
 
-								{heroBehobenPieces.length >= 3 && (
+								{/* {heroBehobenPieces.length >= 3 && (
 									<div className="pointer-events-none absolute inset-0 z-10">
 										{heroBehobenPieces.map((piece, index) => {
 											const dimensions = behobenHeroImageDimensions[
@@ -117,27 +120,27 @@ export default async function Home() {
 														height={dimensions.height}
 														priority={index < 2}
 														sizes="(max-width: 640px) 58vw, (max-width: 1024px) 34vw, 26vw"
-														className="block h-auto w-full border border-white/10 opacity-95 shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
+														className="block h-auto w-full border border-paper/10 opacity-95 shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
 													/>
 												</div>
 											);
 										})}
 									</div>
-								)}
+								)} */}
 							</div>
 						</section>
 					</div>
 				</div>
 			)}
 
-			<div className="w-full bg-white">
+			<div className="w-full">
 				<div className="container mx-auto max-w-[90%] px-4 py-16 md:py-20">
 					<section>
 						<div className="mb-10 max-w-3xl space-y-4 md:mb-12">
-							<h2 className="font-bold text-[clamp(2rem,4vw,5rem)] tracking-tight text-center md:text-left text-black uppercase">
+							<h2 className="font-bold text-[clamp(2rem,4vw,5rem)] tracking-tight text-center md:text-left text-ink uppercase">
 								Video works
 							</h2>
-							<p className="max-w-2xl text-base leading-relaxed text-black/70">
+							<p className="max-w-2xl text-base leading-relaxed text-ink/70">
 								A quieter run through the work in motion, kept direct and
 								editorial.
 							</p>
@@ -148,7 +151,7 @@ export default async function Home() {
 			</div>
 
 			{sectionVisibility.clothing !== false && clothingItems.length > 0 && (
-				<div className="w-full bg-black text-white">
+				<div className="w-full text-ink">
 					<div className="container mx-auto max-w-[90%] px-4 py-14 md:py-18">
 						<section>
 							<h2 className="mb-10 text-center font-bold text-[clamp(2rem,7vw,8rem)] leading-none tracking-tight md:mb-16">
@@ -176,24 +179,8 @@ export default async function Home() {
 			)}
 
 			{sectionVisibility.social !== false && (
-				<div className="w-full bg-white">
-					<div className="container mx-auto max-w-[90%] px-4 pb-16 pt-20 md:pb-18 md:pt-24">
-						<section>
-							<div className="flex flex-col items-center justify-between gap-16 md:flex-row md:gap-12">
-								<div className="order-1 self-center md:order-2">
-									<LazyEyeball3D />
-								</div>
-
-								<div className="order-2 space-y-8 md:order-1 md:space-y-12">
-									<h2 className="text-center font-extrabold text-[clamp(2rem,7vw,6.25rem)] tracking-tight text-black md:text-left">
-										FIND ME AT
-									</h2>
-
-									<SocialLinks settings={settings} />
-								</div>
-							</div>
-						</section>
-					</div>
+				<div className="w-full">
+					<BehobenFooter settings={settings} />
 				</div>
 			)}
 		</main>

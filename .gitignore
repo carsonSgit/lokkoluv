@@ -38,3 +38,12 @@ next-env.d.ts
 # pnpm
 pnpm-lock.yaml
 .omx
+.agents
+.codex
+.opencode
+.claude
+.superpowers
+
+.mcp.json
+opencode.json
+.claude/settings.local.json
